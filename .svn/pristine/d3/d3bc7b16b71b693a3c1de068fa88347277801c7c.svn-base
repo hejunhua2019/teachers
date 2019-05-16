@@ -1,0 +1,1725 @@
+
+    function showtext(a){
+    	$(datagridId).datagrid('clearSelections');
+    	textUrl = "${pageContext.request.contextPath}/mms/listpaget2?groupid=" + a;
+    	reloadtext();
+    }
+    
+	function showtext2(a){
+		$('#tt1').datagrid('clearSelections');
+    	textUrl = "${pageContext.request.contextPath}/mms/listpaget2?groupid=" + a;
+    	reloadtext2();
+    }
+    
+    function settxt(){
+    	var tmp = $("#mmstxt").val();
+    	$("#addpage input[name='textcontent']").val(tmp);
+    	$("#edittxt").text(tmp);
+    	$('#addsource4').dialog('close'); 
+    }
+    
+    function tosettxt(){
+    	var text = $("#addpage input[name='textcontent']").val();
+    	$("#mmstxt").val(text);
+    	$("#addsource4").dialog("open").dialog('setTitle', '设置文本');    	
+    }
+    
+    function cancelsettxt(){
+    	var text = $("#addpage input[name='textcontent']").val();
+    	$('#addsource4').dialog('close'); 
+    	$("#mmstxt").val(text);
+    }
+    
+    function showmmsg(){
+    $(datagridId).datagrid({
+    	 		/* title: '用户管理', //标题 */
+	            method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: false, //多选   
+	            //checkOnSelect:false,
+	            height: 300, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:listUrl, //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号
+    			/* fitColumns:true,
+    			rownumbers : true,
+    		    striped: true, 
+    		    fit:true,
+    		    pagination : true,
+    		    pageNumber : 1,
+    		    pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize,
+    		    pagePosition : 'bottom',
+    		    singleSelect : true,
+    		    selectOnCheck:false,
+    		    nowrap:true,
+    		    url:listUrl, */
+    		    columns:[[
+    		    			//{field: 'ck', checkbox: true, width: 2}, //显示复选框
+		                    {field: 'id', title: '模板组ID', width: 20, sortable: true, hidden: true, 
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    {field:'userid',title:'用户id',width:100, sortable: true,hidden: true, 
+    							formatter: function (value, row, index) {
+		                            return row.userid;
+		                        }
+    						},
+    						{field:'groupname',title:'组名称',width:100, sortable: true,hidden: true, 
+    							formatter: function (value, row, index) {
+		                            return row.groupname;
+		                        }
+    						},
+    						{field:'createDate',title:'创建时间',width:100, sortable: true,hidden: true, 
+    							formatter: function (value, row, index) {
+		                            return row.createDate;
+		                        }
+    						},
+    						{field:'modifyDate',title:'修改时间',width:100, sortable: true,hidden: true, 
+    							formatter: function (value, row, index) {
+		                            return row.modifyDate;
+		                        }
+    						},
+					
+    						{field:'cuozuo',title:'组名称',width:100,
+    							formatter:function(value,row,index){    							
+    							var btn = '<a onclick="showtext('+row.id+')" href="javascript:void(0)">'+row.groupname+'</a>';  
+                				return btn;
+    						}}
+    				    ]],
+    			 	/* toolbar: [
+		                {
+		                    text: '新建文件夹',
+		                    iconCls: 'icon-add',
+		                    handler: function () {
+		                        addrow();
+		                    }
+		                },
+		                '-',
+		                {
+		                    text: '修改文件夹',
+		                    iconCls: 'icon-edit',
+		                    handler: function () {
+		                        updaterow();
+		                    }
+		                },
+		                '-',
+		                {
+		                    text: '删除文件夹',
+		                    iconCls: 'icon-remove',
+		                    handler: function () {
+		                        deleterow();
+		                    }
+		                },
+		                '-',
+		                {
+		                    text: '共享文件夹',
+		                    iconCls: 'icon-edit',
+		                    handler: function () {
+		                        sharerow();
+		                    }
+		                },
+		                '-'
+            		],     */
+					onLoadSuccess: function () {
+		                $(datagridId).datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    	 });
+    }
+    
+    function showbeshared(){
+    $('#tt1').datagrid({
+    			method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: false, //多选
+	            height: 300, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:"mms/listpage2", //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号 
+    		    columns:[[
+    		    			/* {field: 'ck', checkbox: true, width: 2}, //显示复选框 */
+		                    {field: 'id', title: '共享表ID', width: 20, sortable: true, hidden: true,
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    {field:'mmsgroid',title:'模板组id',width:100, sortable: true,hidden: true,
+    							formatter: function (value, row, index) {
+		                            return row.mmsgroid;
+		                        }
+    						},
+    						{field:'username',title:'用户名',width:100, sortable: true,hidden: true,
+    							formatter: function (value, row, index) {
+		                            return row.username;
+		                        }
+    						},
+    						{field:'groupname',title:'模板名称',width:100, sortable: true,hidden: true,
+    							formatter: function (value, row, index) {
+		                            return row.groupname;
+		                        }
+    						}, 				
+    						{field:'cuozuo',title:'分享彩信组',width:100,formatter:function(value,row,index){
+    							var btn = '<a onclick="showtext2('+row.mmsgroid+')" href="javascript:void(0)">'+
+    							row.username+
+    							'【'+
+    							row.groupname+
+    							'】'+
+    							'</a>';  
+                				return btn;
+    						}}
+    				    ]],    			 	  
+					onLoadSuccess: function () {
+		                $('#tt1').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    	  });    
+    
+    }
+    
+    function showothercon(){
+    $('#besharelist').datagrid({
+    			method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: false, //多选
+	            height: 230, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:"contacts/besharelist", //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号
+    			/* fitColumns:true,
+    			rownumbers : true,
+    		    striped: true, 
+    		    fit:true,
+    		    pagination : true,
+    		    pageNumber : 1,
+    		    pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize,
+    		    pagePosition : 'bottom',
+    		    singleSelect : true,
+    		    selectOnCheck:false,
+    		    nowrap:true,
+    		    url:listUrl, */
+    		    columns:[[
+    		    			{field: 'ck', checkbox: true, width: 2}, //显示复选框 
+		                    {field: 'id', title: '共享表ID', width: 20, sortable: true, hidden: true,
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    {field:'groupid',title:'模板组id',width:100, sortable: true,hidden: true,
+    							formatter: function (value, row, index) {
+		                            return row.groupid;
+		                        }
+    						},
+    						{field:'groupname',title:'组名称',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            /* var btn = '<a onclick="showtcon('+row.groupid+')" href="javascript:void(0)">'+value+'</a>';  
+                					return btn; */
+                					return row.groupname;
+		                        }
+    						},
+    						{field:'username',title:'共享人',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            /* var btn = '<a onclick="showtcon('+row.groupid+')" href="javascript:void(0)">'+value+'</a>';  
+                					return btn; */
+                					return row.username;
+		                        }
+    						}
+    						/* , 				
+    						{field:'cuozuo',title:'操作',width:100,formatter:function(value,row,index){
+    							var btn = '<a onclick="showtext2('+row.smsgroid+')" href="javascript:void(0)">显示短信</a>';  
+                				return btn;
+    						}} */
+    				    ]],    			 	  
+					onLoadSuccess: function () {
+		                $('#besharelist').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    	  });    
+    
+    }
+    
+    function showmyshare(){
+	$('#tt2').datagrid({
+    			method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: false, //多选
+	            height: 300, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:"mms/listpage3", //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号
+    			
+    		    columns:[[
+    		    			{field: 'ck', checkbox: true, width: 2}, //显示复选框
+		                    {field: 'id', title: '共享表ID', width: 20, sortable: true, hidden: true,
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    {field:'mmsgroid',title:'模板组id',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.mmsgroid;
+		                        }
+    						},
+    						
+    						{field:'groupname',title:'文件夹名',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.groupname;
+		                        }
+    						}, 	
+    						
+    						{field:'username',title:'共享他人员工名',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.username;
+		                        }
+    						},
+    									
+    						{field:'cuozuo',title:'操作',width:100,formatter:function(value,row,index){
+    							return '<a class="easyui-linkbutton" iconCls="icon-edit">操作</a>';
+    						}}
+    				    ]],    
+    					toolbar: [
+		                {
+		                    text: '解除共享',
+		                    iconCls: 'icon-remove',
+		                    handler: function () {
+		                        delshare();
+		                    }
+		                },
+		                '-'
+            		],    			 	  
+					onLoadSuccess: function () {
+		                $('#tt2').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    			}); 
+    
+    }
+    
+    function reloadtext(){
+    
+    $('#tt3').datagrid({
+    			method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: true, //多选
+	            height: 300, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:textUrl, //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号
+    			
+    		    columns:[[
+    		    			//{field: 'ck', checkbox: true, width: 2}, //显示复选框
+		                    {field: 'id', title: '彩信ID', width: 20, sortable: true, hidden: true,
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    /* {field:'userid',title:'用户id',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.userid;
+		                        }
+    						},
+    						
+    						{field:'groupid',title:'模板id',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.groupid;
+		                        }
+    						}, 	 */
+    						{field:'cuozuo',title:'',width:30,formatter:function(value,row,index){
+    							return '<input type="radio" name="schoose"></input>';
+    							}
+    						} ,
+    						
+    						{field:'mmstitle',title:'彩信标题',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.mmstitle;
+		                        }
+    						},
+    						
+    						{field:'pagenum',title:'帧数',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.pagenum;
+		                        }
+    						},
+    						
+    						{field:'createDate',title:'创建时间',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.createDate;
+		                        }
+    						}/* ,
+    									
+    						{field:'cuozuo',title:'操作',width:100,formatter:function(value,row,index){
+    							return '<a class="easyui-linkbutton" iconCls="icon-edit">操作</a>';
+    						}} */
+    				    ]],    
+    					/* toolbar: [
+		                {
+		                    text: '添加模板',
+		                    iconCls: 'icon-add',
+		                    handler: function () {
+		                        addmms();
+		                    }
+		                },
+		                '-',
+		                {
+		                    text: '修改模板',
+		                    iconCls: 'icon-edit',
+		                    handler: function () {
+		                        updatemms();
+		                    }
+		                },
+		                '-',
+		                {
+		                    text: '删除模板',
+		                    iconCls: 'icon-remove',
+		                    handler: function () {
+		                        deletemms();
+		                    }
+		                },
+		                '-'
+            		],    	 */		 	  
+					onLoadSuccess: function () {
+		                $('#tt3').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    			});     
+    }
+    
+		function reloadtext2(){
+		$('#tt3').datagrid({
+    			method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: false, //多选
+	            height: 500, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:textUrl, //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号
+    			
+    		    columns:[[
+    		    			{field: 'ck', checkbox: true, width: 2}, //显示复选框
+		                    {field: 'id', title: '短信ID', width: 20, sortable: true, hidden: true,
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    {field:'userid',title:'用户id',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.userid;
+		                        }
+    						},
+    						
+    						{field:'groupid',title:'模板id',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.groupid;
+		                        }
+    						}, 	
+    						
+    						{field:'mmstitle',title:'彩信标题',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.mmstitle;
+		                        }
+    						},
+    						
+    						{field:'memo',title:'备注',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.memo;
+		                        }
+    						},
+    									
+    						{field:'cuozuo',title:'操作',width:100,formatter:function(value,row,index){
+    							return '<a class="easyui-linkbutton" iconCls="icon-edit">操作</a>';
+    						}}
+    				    ]],   	  
+					onLoadSuccess: function () {
+		                $('#tt3').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    			});  
+		}
+	function showuserlist(){
+	$('#userlist').datagrid({
+    			method: 'post',
+	            iconCls: 'icon-edit', //图标
+	            singleSelect: false, //多选
+	            height: 500, //高度
+	            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+	            striped: true, //奇偶行颜色不同
+	            collapsible: true,//可折叠
+	            url:"user/allUserListPage", //数据来源
+	            sortName: 'id', //排序的列
+	            sortOrder: 'desc', //倒序
+	            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+	            pageList : [pageSize,pageSize*2,pageSize*3],
+    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+	            remoteSort: true, //服务器端排序
+	            idField: 'id', //主键字段
+	            queryParams: {}, //查询条件
+	            pagination: true, //显示分页
+	            rownumbers: true, //显示行号
+    			
+    		    columns:[[
+    		    			{field: 'ck', checkbox: true, width: 2}, //显示复选框
+    		    			{field: 'id', title: '用户ID', width: 20, sortable: true, hidden: true,
+		                        formatter: function (value, row, index) {
+		                            return row.id;
+		                        }
+		                    },
+		                    
+		                    {field:'userNo',title:'员工号',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.userNo;
+		                        }
+    						},
+    						
+    						{field:'dpId',title:'部门ID',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.dpId;
+		                        }
+    						}, 	
+    						
+    						{field:'userName',title:'员工姓名',width:100, sortable: true,
+    							formatter: function (value, row, index) {
+		                            return row.userName;
+		                        }
+    						}
+    				    ]],	 	  
+					onLoadSuccess: function () {
+		                $('#tt3').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+		            }
+    			});
+	}
+
+    
+    //新建
+    function addrow() {
+        $("#addsource").dialog("open").dialog('setTitle', '新建文件夹');
+        $("#fm").form("clear");
+        url = "${pageContext.request.contextPath}/mms/addgro";
+        document.getElementById("hidtype").value = "submit";
+    }
+    //更新
+    function updaterow() {
+        var rows = $(datagridId).datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要更新的文件夹", 'info');
+            return;
+        }
+        if (rows.length > 1) {
+            $.messager.alert('提示', "只能选择一个文件夹进行更新", 'info');
+            return;
+        }
+        $("#addsource").dialog("open").dialog('setTitle', '用户更新');
+        $("#fm").form("load", rows[0]);
+        url = "${pageContext.request.contextPath}/mms/addgro";
+    }
+
+    //删除
+    function deleterow() {
+        var rows = $(datagridId).datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要删除的文件夹", 'info');
+            return;
+        }
+        $.messager.confirm('提示', '同时删除文件夹内所有短信，确定要删除吗?', function (result) {
+            if (result) {
+                var rows = $(datagridId).datagrid('getSelections');
+                var ps = "";
+                $.each(rows, function (i, n) {
+                    if (i == 0)
+                        ps += "?id=" + n.id;
+                    else
+                        ps += "&id=" + n.id;
+                });
+                $.post('${pageContext.request.contextPath}/mms/delgro' + ps, function (data) {
+                    $(datagridId).datagrid('reload');
+                    textUrl = "${pageContext.request.contextPath}/mms/listpaget";
+    				reloadtext();
+                    $.messager.alert('提示', data.mes, 'info');
+                });
+            }
+        });
+    }
+    
+	function sharerow() {
+        var rows = $(datagridId).datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要分享的文件夹", 'info');
+            return;
+        }
+        if (rows.length > 1) {
+            $.messager.alert('提示', "只能选择一个文件夹分享", 'info');
+            return;
+        }
+        $("#addsource3").dialog("open").dialog('setTitle', '用户更新');
+        showuserlist();
+        var v1 = rows[0].id;
+        $("#fm3 input[name='mmsgroid']").val(v1); 
+        
+        url = "${pageContext.request.contextPath}/mms/addshare";
+    }
+    
+    
+    //新建
+    function addmms() {
+    	editordel=1;       
+        var v2;
+        $.post('${pageContext.request.contextPath}/mms/addmmsbat', function (data) {
+                    v2 = data.newid;
+                    alert(v2);
+					$("#fm2 input[name='id']").val(v2);
+			        $("#addpage input[name='templateid']").val(v2);								
+        });
+             
+    }
+    //更新 
+    
+    function updatemms() {
+    	editordel=0;
+        var rows = $("#tt3").datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要更新的彩信", 'info');
+            return;
+        }
+        if (rows.length > 1) {
+            $.messager.alert('提示', "只能选择一个彩信进行更新", 'info');
+            return;
+        }
+        var a = ${uid};
+        var b= rows[0].userid; 
+        if(a!=b){ 
+        	$.messager.alert('提示', "没有权限！", 'info');
+            return;
+        }
+        /*$("#addsource2").dialog("open").dialog('setTitle', '彩信更新');
+        $("#fm2").form("load", rows[0]); */
+        
+        $("#fm2 input[name='id']").val(rows[0].id);
+        $("#fm2 input[name='groupid']").val(rows[0].groupid);
+        $("#fm2 input[name='createDate']").val(rows[0].createDate);
+        $("#fm2 input[name='mmstitle']").val(rows[0].mmstitle);
+        $("#fm2 input[name='mmsmemo']").val(rows[0].memo);
+        //获取所有帧的新状态，然后回显当前帧
+		var tid = $("#fm2 input[name='id']").val();
+		$("#addpage input[name='templateid']").val(tid);
+					
+					$.post('${pageContext.request.contextPath}/sendmms/getpages?templateid=' + tid, function (data) {
+	                    var rows = data.rows;
+	                        $("#pagenum").children().remove(); 
+	                    	for(i=0;i<rows.length;i++){
+	                    		$("#pagenum").append("<option value="+rows[i].id+">第"+(i+1)+"帧</option>");
+	                    	}
+	                    	if(rows.length>0){
+	                    		$("#pagenum").children(":first").attr("selected",true);
+	                    	}
+	                    	else{
+	                    		$("#pagenum").append("<option value=''>第"+(rows.length+1)+"帧</option>");
+	                    		$("#pagenum").children(":last").attr("selected",true);
+	                    	}
+	                    	
+	                    	
+	                    	reloadform();
+							$("#addsource2").dialog("open").dialog('setTitle', '新建彩信');
+					        /* var v = rows[0].id; 
+					        $("#fm2 input[name='groupid']").val(v);
+					        $("#fm2 input[name='id']").val(v2);
+					        $("#fm2 input[name='mmstitle']").val('');
+					        $("#fm2 input[name='mmsmemo']").val(''); */
+					        //reloadform();
+                	});
+        
+        
+        
+    }
+	
+	function loadtemplate() {
+		var rows = $("#tt3").datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要载入的彩信", 'info');
+            return;
+        }
+        var mmsid = rows[0].id;
+        $.post('${pageContext.request.contextPath}/sendmms/addmmsbat?mmsid=' + mmsid, function (data) {
+        	var mb = data.mb;
+          	var newid = mb.id;
+			$("#fm2 input[name='id']").val(newid);
+	        $("#addpage input[name='templateid']").val(newid);
+			$.post('${pageContext.request.contextPath}/sendmms/addpages?mmsid=' + mmsid+"&bid=" + newid, function (data) {
+	          	var mb = data.mb;
+	          	var rows = data.rows;
+		        $("#fm2 input[name='id']").val(mb.id);
+		        $("#fm2 input[name='createDate']").val(mb.createDate);
+		        $("#fm2 input[name='mmstitle']").val(mb.title);
+		        $("#fm2 input[name='mmsmemo']").val(mb.remark);
+		        
+		        $("#pagenum").children().remove(); 
+               	for(i=0;i<rows.length;i++){
+               		$("#pagenum").append("<option value="+rows[i].id+">第"+(i+1)+"帧</option>");
+               	}
+               	if(rows.length>0){
+               		$("#pagenum").children(":first").attr("selected",true);
+               	}
+               	else{
+               		$("#pagenum").append("<option value=''>第"+(rows.length+1)+"帧</option>");
+               		$("#pagenum").children(":last").attr("selected",true);
+               	}               	
+               	
+               	reloadform();
+		        $('#addsource2').dialog('close');
+		        
+        	});
+        });
+	}
+	
+	function addcancel(){
+		var vid = $("#fm2 input[name='id']").val();
+		if(editordel==1){
+		$.post('${pageContext.request.contextPath}/mms/delmms?id=' + vid, function (data) {
+                    $("#tt3").datagrid('reload');
+                    if(data.result==1){
+			        	$('#addsource2').dialog('close');
+       				 }
+                });
+        }
+        else{
+        	$('#addsource2').dialog('close');
+        }
+        $("#test1").text('未上传');
+        $("#test2").text('未上传');
+        $("#test3").text('未上传');
+	}
+	
+    //删除
+    function deletemms() {
+        var rows = $("#tt3").datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要删除的用户", 'info');
+            return;
+        }
+        
+        var a = ${uid};
+        var b= rows[0].userid; 
+        if(a!=b){ 
+        	$.messager.alert('提示', "没有权限！", 'info');
+            return;
+        }
+        
+        $.messager.confirm('提示', '确定要删除吗?', function (result) {
+            if (result) {
+                var rows = $("#tt3").datagrid('getSelections');
+                var ps = "";
+                $.each(rows, function (i, n) {
+                    if (i == 0)
+                        ps += "?id=" + n.id;
+                    else
+                        ps += "&id=" + n.id;
+                });
+                $.post('${pageContext.request.contextPath}/mms/delmms' + ps, function (data) {
+                    $("#tt3").datagrid('reload');
+                    $.messager.alert('提示', data.mes, 'info');
+                });
+            }
+        });
+    }
+    function toinsertpage(){
+    	//保存当前帧的编辑
+    	//savepage();↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+    	var decide = $("#addpage input[name='id']").val();
+    	if(decide==null||decide==''){ 
+    		url="${pageContext.request.contextPath}/sendmms/savepage";
+    	}
+    	else{ 
+    		url="${pageContext.request.contextPath}/sendmms/updatepage";
+    	}
+    	
+    	$("#addpage input[name='timeLag']").val($("#delay").val()); 
+        $("#addpage").form("submit", {
+            url: url,
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $.messager.alert("提示信息", "添加帧成功");
+                    /* $("#addsource").dialog("close");
+                    $(datagridId).datagrid("load"); */
+                } else if (result.result == "2") {
+                    $.messager.alert("提示信息", "更新帧成功");
+                    /*$("#addsource").dialog("close");
+                    $(datagridId).datagrid("load"); */
+                } else {
+                    $.messager.alert("提示信息", result.mes+"操作帧失败");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+         //savepage();↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑       
+                //////////////////////////{}
+		    	//先判断是否已经有10帧;
+		    	//插入新的一帧
+		    	$("#addpage").form("clear");
+		        $("#form1").form("clear");
+		        $("#form2").form("clear");
+		        $("#form3").form("clear");
+		        $("#test1").text('未上传');
+		        $("#test2").text('未上传');
+		        $("#test3").text('未上传');
+		        $("#mmsimg").attr("src", "");
+		        $("#mmstxt").val('');
+ 				$("#edittxt").text('');
+        
+        			var xx = $("#fm2 input[name='id']").val();
+			        $("#addpage input[name='templateid']").val(xx);
+					$.post('${pageContext.request.contextPath}/sendmms/getpages?templateid=' + xx, function (data) {
+	                    var rows = data.rows;
+	                        $("#pagenum").children().remove(); 
+	                    	for(i=0;i<rows.length;i++){
+	                    		$("#pagenum").append("<option value="+rows[i].id+">第"+(i+1)+"帧</option>");
+							}
+	                    	$("#pagenum").append("<option value=''>第"+(rows.length+1)+"帧</option>");
+	                    	$("#pagenum").children(":last").attr("selected",true);	
+	                    	$("#delay").children(":first").attr("selected",true);						
+                	}); 
+                	
+            }
+        });
+    }
+    function insertpage(){
+    	var tid = $("#fm2 input[name='id']").val();
+    	if(tid==null||tid==''){
+    		var v2;
+        	$.post('${pageContext.request.contextPath}/sendmms/addmmsbat', function (data) {
+                    v2 = data.newid; 
+					$("#fm2 input[name='id']").val(v2);
+			        $("#addpage input[name='templateid']").val(v2);
+        			toinsertpage();
+        	});
+    		
+    	}
+    	else{
+    		$("#addpage input[name='templateid']").val(tid);
+    		toinsertpage();
+    	}
+    	
+    } 
+    
+    function delpage(){ 
+    	var pageid = $("#pagenum").val();
+    	if(pageid==null||pageid==''){
+    		$.messager.alert('提示', "请选择已经存在的帧删除", 'info');
+            return;
+    	}
+    	$.post('${pageContext.request.contextPath}/sendmms/delpage?pageid=' + pageid, function (data) {
+                    if(data.result=='1'){
+                    	$.messager.alert('提示', '删除成功！', 'info');
+                    }
+                    else{
+                    	$.messager.alert('提示', '删除失败！', 'info');
+                    }
+                    
+                    var tid = $("#fm2 input[name='id']").val();
+					$("#addpage input[name='templateid']").val(tid);
+					
+					$.post('${pageContext.request.contextPath}/sendmms/getpages?templateid=' + tid, function (data) {
+	                    var rows = data.rows;
+	                        $("#pagenum").children().remove(); 
+	                    	for(i=0;i<rows.length;i++){
+	                    		$("#pagenum").append("<option value="+rows[i].id+">第"+(i+1)+"帧</option>");
+	                    	}
+	                    	if(rows.length>0){
+	                    		$("#pagenum").children(":first").attr("selected",true);
+	                    	}
+	                    	else{
+	                    		$("#pagenum").append("<option value=''>第"+(rows.length+1)+"帧</option>");
+	                    		$("#pagenum").children(":last").attr("selected",true);
+	                    	}
+	                    	reloadform();
+                	});
+                    
+                    
+                });
+    	
+    }
+    
+    
+    
+    function changefc(){ 
+    	var decide = $("#addpage input[name='id']").val();
+    	if(decide==null||decide==''){ 
+    		url="${pageContext.request.contextPath}/sendmms/savepage";
+    	}
+    	else{ 
+    		url="${pageContext.request.contextPath}/sendmms/updatepage";
+    	}
+    	
+    	$("#addpage input[name='timeLag']").val($("#delay").val()); 
+        $("#addpage").form("submit", {
+            url: url,
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $.messager.alert("提示信息", "添加帧成功");
+                    /* $("#addsource").dialog("close");
+                    $(datagridId).datagrid("load"); */
+                } else if (result.result == "2") {
+                    $.messager.alert("提示信息", "更新帧成功");
+                    /*$("#addsource").dialog("close");
+                    $(datagridId).datagrid("load"); */
+                } else {
+                    $.messager.alert("提示信息", result.mes+"操作帧失败");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+                
+                	var xx = $("#fm2 input[name='id']").val();
+			        $("#addpage input[name='templateid']").val(xx);
+					$.post('${pageContext.request.contextPath}/sendmms/getpages?templateid=' + xx, function (data) {
+	                    	var rows = data.rows;
+	                    	var nowpageid = $("#pagenum").val();
+	                        $("#pagenum").children().remove(); 
+	                    	for(var i=0;i<rows.length;i++){
+	                    		$("#pagenum").append("<option value="+rows[i].id+">第"+(i+1)+"帧</option>");
+							}
+	                    	for(var i=0;i<$("#pagenum").children().length;i++){
+	                    		if($("#pagenum").children().eq(i).val()==nowpageid){
+	                    			$("#pagenum").children().eq(i).attr("selected",true);
+	                    		}
+	                    	}	                    	
+	                    	reloadform();													
+                	});
+                
+                
+            }
+        });
+    	
+    }
+    
+    function reloadform(){
+    	var pageid = $("#pagenum").val();
+    	//pageid=1;
+    	$("#addpage").form("clear");
+        $("#form1").form("clear");
+        $("#form2").form("clear");
+        $("#form3").form("clear");
+        $("#test1").text('未上传');
+        $("#test2").text('未上传');
+        $("#test3").text('未上传');
+        $("#mmsimg").attr("src", "");
+       	$("#mmstxt").val(''); 
+        $("#edittxt").text('');
+        
+		$("#addpage input[name='templateid']").val($("#fm2 input[name='id']").val());
+        
+    	$.post('${pageContext.request.contextPath}/sendmms/reload?pageid=' + pageid, function (data) {
+                    var mmspage = data.mmspage;
+                    $("#addpage input[name='id']").val(mmspage.id);
+                    $("#addpage input[name='templateid']").val(mmspage.batchId);
+                    $("#addpage input[name='timeLag']").val(mmspage.timeLag);
+                    $("#addpage input[name='imgname']").val(mmspage.picname);
+                    $("#addpage input[name='imgurl']").val(mmspage.picPath);
+                    $("#addpage input[name='musicname']").val(mmspage.musicname);
+                    $("#addpage input[name='musicurl']").val(mmspage.musicPath);
+                    $("#addpage input[name='textname']").val(mmspage.textname);
+                    $("#addpage input[name='texturl']").val(mmspage.textPath);
+                    $("#addpage input[name='textcontent']").val(mmspage.content);
+                    $("#addpage input[name='createDate']").val(mmspage.createDate);
+                    //alert(mmspage.timeLag)
+                    var delay = $("#delay").children();
+                    //alert(delay.length);
+                    for(var i=0;i<delay.length;i++){
+                    	if(delay.eq(i).val()==mmspage.timeLag){
+                    		delay.eq(i).attr("selected",true);
+                    	}
+                    }
+                    
+                    $("#form1 input[name='templateid']").val(mmspage.batchId);
+                    if(mmspage.picPath!=''&&mmspage.picPath!=null){ 
+                    	$("#form1 input[name='todelurl']").val(mmspage.picPath);
+                    	$("#test1").text('已上传');
+						$("#mmsimg").attr("src", "mms/getsrc?path="+mmspage.picPath);
+                    }
+                    $("#form2 input[name='templateid']").val(mmspage.batchId);
+                    $("#mmstxt").val(mmspage.content);
+                    $("#edittxt").text(mmspage.content);
+                    if(mmspage.textPath!=''&&mmspage.textPath!=null){
+                    	$("#form2 input[name='todelurl']").val(mmspage.textPath);
+                    	$("#test2").text('已上传');
+                    }
+                    $("#form3 input[name='templateid']").val(mmspage.batchId);
+                    if(mmspage.musicPath!=''&&mmspage.musicPath!=null){
+                    	$("#form3 input[name='todelurl']").val(mmspage.musicPath);
+                    	$("#test3").text('已上传');
+                    }
+                        
+       	});
+    }
+    
+    function delshare() {
+        var rows = $("#tt2").datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows.length == 0) {
+            $.messager.alert('提示', "请选择你要解除的共享", 'info');
+            return;
+        }
+        $.messager.confirm('提示', '确定要解除共享吗?', function (result) {
+            if (result) {
+                var rows = $("#tt2").datagrid('getSelections');
+                var ps = "";
+                $.each(rows, function (i, n) {
+                    if (i == 0)
+                        ps += "?id=" + n.id;
+                    else
+                        ps += "&id=" + n.id;
+                });
+                $.post('${pageContext.request.contextPath}/mms/delshare' + ps, function (data) {
+                    $("#tt2").datagrid('reload');
+                    $.messager.alert('提示', data.mes, 'info');
+                });
+            }
+        });
+    }
+    
+    function savemmsg(){
+        $("#fm").form("submit", {
+            url: url,
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $.messager.alert("提示信息", "添加用户成功");
+                    $("#addsource").dialog("close");
+                    $(datagridId).datagrid("load");
+                } else if (result.result == "2") {
+                	
+                    $.messager.alert("提示信息", "更新彩信成功");
+                    $("#addsource").dialog("close");
+                    $(datagridId).datagrid("load");
+                } else {
+                    $.messager.alert("提示信息", result.mes+"添加用户失败");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+            }
+        });
+    }
+     
+    
+    function savepage(){
+    	var decide = $("#addpage input[name='id']").val();
+    	if(decide==null||decide==''){ 
+    		url="${pageContext.request.contextPath}/sendmms/savepage";
+    	}
+    	else{ 
+    		url="${pageContext.request.contextPath}/sendmms/updatepage";
+    	}
+    	
+    	$("#addpage input[name='timeLag']").val($("#delay").val()); 
+        $("#addpage").form("submit", {
+            url: url,
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $.messager.alert("提示信息", "添加帧成功");
+                    /* $("#addsource").dialog("close");
+                    $(datagridId).datagrid("load"); */
+                } else if (result.result == "2") {
+                    $.messager.alert("提示信息", "更新帧成功");
+                    /*$("#addsource").dialog("close");
+                    $(datagridId).datagrid("load"); */
+                } else {
+                    $.messager.alert("提示信息", result.mes+"操作帧失败");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+            }
+        });
+    }
+    
+    function savemms(){
+    	var gid = $("#fm2 input[name='groupid']").val(); 
+        $("#fm2").form("submit", {
+            url: "${pageContext.request.contextPath}/mms/updatemms",
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $.messager.alert("提示信息", "添加用户成功");
+                    $("#addsource2").dialog("close"); 
+                    showtext(gid);
+                    /* $("#tt3").datagrid("load"); */
+                } else if (result.result == "2") { 
+                	savepage();
+                	if(editordel=='1'){
+                		$.messager.alert("提示信息", "新建彩信成功");
+                	}
+                	else{
+                		$.messager.alert("提示信息", "更新彩信成功");
+                	}                    
+                    $("#addsource2").dialog("close");
+                    showtext(gid); 
+                } else {
+                    $.messager.alert("提示信息", result.mes+"添加用户失败");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+            }
+        });
+    }
+    function sharegro(){
+    	var rows2 = $("#userlist").datagrid('getSelections');
+        //这里有一个jquery easyui datagrid的一个小bug，必须把主键单独列出来，要不然不能多选
+        if (rows2.length == 0) {
+            $.messager.alert('提示', "请选择你要分享的员工", 'info');
+            return;
+        }        
+        $("#fm3 input[name='besharedid']").remove();
+        var f = document.getElementById("fm3");
+        for(var i=0;i<rows2.length;i++){
+        	var input_file = document.createElement("input");
+        	var v2 = rows2[i].id;
+			input_file.setAttribute("type","checkbox");
+			input_file.setAttribute("name","besharedid");
+			input_file.setAttribute("checked",true);			
+			input_file.setAttribute("value",v2);
+			f.appendChild(input_file);
+        }
+        $("#fm3").form("submit", {
+            url: url,
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $.messager.alert("提示信息", "创建共享成功");
+                    $("#addsource3").dialog("close");
+					$('#userlist').datagrid('clearSelections');
+					$("#fm3 input[name='besharedid']").remove();
+                    showmyshare();
+                } else {
+                    $.messager.alert("提示信息", result.mes+"创建共享失败");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+            }
+        });
+    }
+     
+    function doSearch(){
+ 		$(datagridId).datagrid('reload',getFormJson( searchFormId));
+ 	}
+ 	function toupload1(){
+ 		var tid = $("#fm2 input[name='id']").val();
+ 		$("#form1 input[name='templateid']").val(tid);
+ 		/////////////////////////////////////////////////////
+ 		$("#form1").form("submit", {
+            url:"${pageContext.request.contextPath}/sendmms/upload1",
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $("#addpage input[name='imgurl']").val(result.imgurl);
+                    $("#addpage input[name='imgname']").val(result.imgname);
+                    $("#form1 input[name='todelurl']").val(result.imgurl);
+                    $("#mmsimg").attr("src", "sendmms/getsrc?path="+result.imgurl);
+                    $("#test1").text('已上传');
+                } else {
+                    $.messager.alert("提示信息", result.mes+"上传失败！"); 
+                }
+            }
+        });
+ 		/////////////////////////////////////////////////////
+ 	}
+ 	function doupload1(){ 
+ 		var tid = $("#fm2 input[name='id']").val(); 
+    	if(tid==null||tid==''){
+    		var v2;
+        	$.post('${pageContext.request.contextPath}/sendmms/addmmsbat', function (data) {
+                    v2 = data.mb;                  
+					$("#fm2 input[name='id']").val(v2.id);
+			        $("#addpage input[name='templateid']").val(v2.id);
+        			toupload1();
+        	});
+    		
+    	}
+    	else{
+    		$("#addpage input[name='templateid']").val(tid);
+    		toupload1();
+    	}
+ 	}
+ 	function toupload2(){
+ 		var tid = $("#fm2 input[name='id']").val();
+ 		$("#form2 input[name='templateid']").val(tid);
+ 		/////////////////////////////////////////////////////
+ 		$("#form2").form("submit", {
+            url:"${pageContext.request.contextPath}/sendmms/upload2",
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $("#addpage input[name='texturl']").val(result.texturl);
+                    $("#addpage input[name='textname']").val(result.textname);
+                    $("#form2 input[name='todelurl']").val(result.texturl);
+                    $("#addpage input[name='textcontent']").val(result.textcontent);
+                    $("#mmstxt").val(result.textcontent);
+                    $("#edittxt").text(result.textcontent);
+                    $("#test2").text('已上传');
+                } else {
+                    $.messager.alert("提示信息", result.mes+"上传失败！");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+            }
+        });
+ 		///////////////////////////////////////////////////// 	
+ 	}
+ 	
+ 	function doupload2(){ 
+ 		var tid = $("#fm2 input[name='id']").val();
+    	if(tid==null||tid==''){
+    		var v2;
+        	$.post('${pageContext.request.contextPath}/sendmms/addmmsbat', function (data) {
+                    v2 = data.mb;
+					$("#fm2 input[name='id']").val(v2.id);
+			        $("#addpage input[name='templateid']").val(v2.id);
+        			toupload2();
+        	});
+    		
+    	}
+    	else{
+    		$("#addpage input[name='templateid']").val(tid);
+    		toupload2();
+    	} 
+ 	}
+ 	
+ 	function toupload3(){
+ 		var tid = $("#fm2 input[name='id']").val();
+ 		$("#form3 input[name='templateid']").val(tid);
+ 		/////////////////////////////////////////////////////
+ 		$("#form3").form("submit", {
+            url:"${pageContext.request.contextPath}/sendmms/upload3",
+            method: 'post',
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+				if(typeof result === 'object'){
+				    result = result;
+				}
+				else{
+				    result = eval("("+result+")")
+				}
+                if (result.result == "1") {
+                    $("#addpage input[name='musicurl']").val(result.musicurl);
+                    $("#addpage input[name='musicname']").val(result.musicname);
+                    $("#form3 input[name='todelurl']").val(result.musicurl); 
+                    $("#test3").text('已上传');
+                } else {
+                    $.messager.alert("提示信息", result.mes+"上传失败！");
+                    /* $("#addsource").dialog("close");
+                    $("#flatTable").datagrid("load"); */
+                }
+            }
+        });
+ 		/////////////////////////////////////////////////////
+ 	}
+ 	
+ 	function doupload3(){ 	
+ 		var tid = $("#fm2 input[name='id']").val();
+    	if(tid==null||tid==''){
+    		var v2;
+        	$.post('${pageContext.request.contextPath}/sendmms/addmmsbat', function (data) {
+                    v2 = data.mb;
+					$("#fm2 input[name='id']").val(v2.id);
+			        $("#addpage input[name='templateid']").val(v2.id);
+        			toupload3();
+        	});
+    		
+    	}
+    	else{
+    		$("#addpage input[name='templateid']").val(tid);
+    		toupload3();
+    	} 
+ 	}
+ 	
+ 	function cancel(){
+ 	 	$('#userlist').datagrid('clearSelections');
+ 		$('#addsource3').dialog('close');
+ 	}
+ 	function clear1(){
+ 		var todelurl =$("#form1 input[name='todelurl']").val(); 
+ 		$.post('${pageContext.request.contextPath}/sendmms/delexist?todelurl='+todelurl, function (data) {
+ 					if(data.result=='1'){
+			    		var tmp1 = $("#addpage input[name='templateid']").val();
+			    		$("#form1").form("clear");
+			    		$("#form1 input[name='templateid']").val(tmp1);
+ 						$("#addpage input[name='imgurl']").val('');
+ 						$("#addpage input[name='imgname']").val('');
+ 						$("#mmsimg").attr("src", "");
+ 						$("#test1").text('未上传'); 
+ 					}
+ 					else{
+ 						$.messager.alert('提示','清除失败！', 'info');
+ 					}       
+                });
+ 		
+ 	}
+	function clear2(){
+ 		var todelurl =$("#form2 input[name='todelurl']").val(); 
+ 		$.post('${pageContext.request.contextPath}/sendmms/delexist?todelurl='+todelurl, function (data) {
+ 					if(data.result=='1'){
+			    		var tmp2 = $("#addpage input[name='templateid']").val();
+			    		$("#form2").form("clear");
+			    		$("#form2 input[name='templateid']").val(tmp2);
+ 						$("#addpage input[name='txturl']").val('');
+ 						$("#addpage input[name='txtname']").val('');
+ 						$("#addpage input[name='textcontent']").val('');
+ 						$("#mmstxt").val('');
+ 						$("#edittxt").text('');						
+ 						$("#test2").text('未上传'); 
+ 					}
+ 					else{
+ 						$.messager.alert('提示','清除失败！', 'info');
+ 					}       
+                });
+ 		
+ 	}	
+ 	function clear3(){
+ 		var todelurl =$("#form3 input[name='todelurl']").val(); 
+ 		$.post('${pageContext.request.contextPath}/sendmms/delexist?todelurl='+todelurl, function (data) {
+ 					if(data.result=='1'){
+			    		var tmp3 = $("#addpage input[name='templateid']").val();
+			    		$("#form3").form("clear");
+			    		$("#form3 input[name='templateid']").val(tmp3);
+ 						$("#addpage input[name='musicurl']").val('');
+ 						$("#addpage input[name='musicname']").val('');
+ 						$("#test3").text('未上传'); 
+ 					}
+ 					else{
+ 						$.messager.alert('提示','清除失败！', 'info');
+ 					}       
+                });
+ 		
+ 	}	
+ 	
+ 	function choosetp(){
+ 		 textUrl="${pageContext.request.contextPath}/mms/listpaget2";
+ 		 $("#addsource2").dialog("open").dialog('setTitle', '选择模板');
+ 		 $("#radio1").attr("checked","checked");
+ 		 $("#radio2").removeAttr("checked");
+ 		 $("#others").hide();
+ 		 $("#mygro").show();
+ 		 showmmsg();//加载模板组
+    	 reloadtext();//加载短信列表
+ 	}
+ 	function showmygro(){
+ 		 textUrl="${pageContext.request.contextPath}/mms/listpaget2";
+ 		 $("#radio2").removeAttr("checked");
+ 		 $("#others").hide();
+ 		 $("#mygro").show();
+ 		 showmmsg();//加载模板组 
+    	 reloadtext();//加载短信列表
+ 	}
+ 	function showothers(){
+ 		 $("#radio1").removeAttr("checked");
+ 		 $("#others").show();
+ 		 $("#mygro").hide();
+ 		 showbeshared();//加载模板组 
+ 	}
+ 	function searchMms() {
+        var params = $('#tt3').datagrid('options').queryParams; //先取得 datagrid 的查询参数
+        var fields = $('#queryForm').serializeArray(); //自动序列化表单元素为JSON对象
+        $.each(fields, function (i, field) {
+            params[field.name] = field.value; //设置查询参数
+        });
+        $('#tt3').datagrid('reload'); //设置好查询参数 reload 一下就可以了         
+    }
+    
+    function showtree(){
+    $("#grolist").tree({    	 	 
+  			 url: "${pageContext.request.contextPath}/contacts/tree",
+  			 checkbox:true,
+  			 cascadeCheck:false,
+  			 onLoadSuccess:function(){
+				/* $(this).find('span.tree-checkbox').eq(0).unbind().click(function(){
+					return false;
+				}); */
+				$(this).find('span.tree-checkbox').eq(0).removeClass("tree-checkbox tree-checkbox0");
+			 },
+  			 onClick:function(node){ 
+  			} 
+  		})
+    
+    }
+    
+    function showtree2(){
+    $("#grolist2").tree({    	 	 
+  			 url: "${pageContext.request.contextPath}/contacts/tree",
+  			 onClick:function(node){
+  			 	if(node.pid=='0'){
+  			 		$('#queryForm').form('clear');
+  			 		listcontact = "${pageContext.request.contextPath}/contacts/listpagec";
+	  			 	reloadcontact();
+  			 	}
+  			 	else{
+  			 		$('#queryForm').form('clear');
+	  			 	var v1 =node.id;
+	  			 	listcontact = "${pageContext.request.contextPath}/contacts/listpagec?groupid="+v1;
+	  			 	reloadcontact();
+  			 	}  
+  			} 
+  		})
+    }
+    function reloadcontact(){
+	    $('#myconlist').datagrid({
+	    			method: 'post',
+		            iconCls: 'icon-edit', //图标
+		            singleSelect: false, //多选
+		            height: 500, //高度
+		            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+		            striped: true, //奇偶行颜色不同
+		            collapsible: true,//可折叠
+		            url:listcontact, //数据来源
+		            sortName: 'id', //排序的列
+		            sortOrder: 'desc', //倒序
+		            pageNumber: 1,//当设置了 pagination 特性时，初始化页码。
+		            pageList : [pageSize,pageSize*2,pageSize*3],
+	    		    pageSize : pageSize, //当设置了 pagination 特性时，初始化页面尺寸的选择列表。
+		            remoteSort: true, //服务器端排序
+		            idField: 'id', //主键字段
+		            queryParams: {}, //查询条件
+		            pagination: true, //显示分页
+		            rownumbers: true, //显示行号
+	    			
+	    		    columns:[[
+	    		    			{field: 'ck', checkbox: true, width: 2}, //显示复选框
+			                    {field: 'id', title: '联系人ID', width: 20, sortable: true, hidden: true,
+			                        formatter: function (value, row, index) {
+			                            return row.id;
+			                        }
+			                    },
+			                    {field: 'creatDate', title: '创建时间', width: 20, sortable: true, hidden: true,
+			                        formatter: function (value, row, index) {
+			                            return row.creatDate;
+			                        }
+			                    },
+			                    {field:'groupid',title:'组id',width:100, sortable: true, hidden: true,
+	    							formatter: function (value, row, index) {
+			                            return row.groupid;
+			                        }
+	    						},
+	    						
+	    						{field:'number',title:'编号',width:100, sortable: true, hidden: true,
+	    							formatter: function (value, row, index) {
+			                            return row.number;
+			                        }
+	    						}, 	
+	    						
+	    						{field:'name',title:'姓名',width:100, sortable: true,
+	    							formatter: function (value, row, index) {
+			                            return row.name;
+			                        }
+	    						},
+	    						{field:'phone',title:'手机号',width:100, sortable: true,
+	    							formatter: function (value, row, index) {
+			                            return row.phone;
+			                        }
+	    						},
+	    						{field:'sex',title:'性别',width:100, sortable: true,
+	    							formatter: function (value, row, index) {
+			                            if(value == 1) return '男';
+	        		    				if(value == 0) return '女';
+			                        }
+	    						},
+	    						{field:'company',title:'所在单位',width:100, sortable: true,
+	    							formatter: function (value, row, index) {
+			                            return row.company;
+			                        }
+	    						},
+	    						{field:'email',title:'邮箱',width:100, sortable: true,
+	    							formatter: function (value, row, index) {
+			                            return row.email;
+			                        }
+	    						},
+	    						
+	    						{field:'province',title:'省份',width:100, sortable: true,hidden: true,
+	    							formatter: function (value, row, index) {
+			                            return row.province;
+			                        }
+	    						}/* ,
+	    									
+	    						{field:'bianji',title:'编辑',width:100,formatter:function(value,row,index){
+	    							var btn = '<a onclick="editcontact()" href="javascript:void(0)">编辑</a>';  
+	                				return btn;
+	    						}} */
+	    				    ]],    
+	    					/* toolbar: [
+			                {
+			                    text: '新建',
+			                    iconCls: 'icon-add',
+			                    handler: function () {
+			                        addcontact();
+			                    }
+			                },
+			                '-',
+			                {
+			                    text: '导入',
+			                    iconCls: 'icon-add',
+			                    handler: function () {
+			                        importcontact();
+			                    }
+			                },
+			                '-',
+			                {
+			                    text: '导出',
+			                    iconCls: 'icon-edit',
+			                    handler: function () {
+			                        exportcontact();
+			                    }
+			                },
+			                '-',
+			                {
+			                    text: '删除',
+			                    iconCls: 'icon-remove',
+			                    handler: function () {
+			                         delcontact();
+			                    }
+			                },
+			                '-',
+			                {
+			                    text: '全部删除',
+			                    iconCls: 'icon-remove',
+			                    handler: function () {
+			                        clearcontact();
+			                    }
+			                },
+			                '-'
+	            		],    */ 			 	  
+						onLoadSuccess: function () {
+			                $('#myconlist').datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+			            }
+	    			});     
+    }
+    function choosecongro(){
+    	$("#addsource").dialog("open").dialog('setTitle', '选择联系人组');
+    	showtree();
+    	showothercon();
+    }
+    function choosecons(){
+    	$("#addsource3").dialog("open").dialog('setTitle', '选择联系人');
+    	showtree2();
+    	reloadcontact();
+    }
+    function addcontacts(){
+    	var nodes = $('#grolist').tree('getChecked');
+    	var rows = $("#besharelist").datagrid('getSelections');
+    	if(nodes.length==0&&rows.length==0){
+    		$.messager.alert('提示', "请选择联系人组", 'info');
+    		return;
+    	}
+		var ps = "";
+		var ps2= "";
+		if(nodes.length>0){
+			$.each(nodes, function (i, n) {
+            if (i == 0)
+                ps += "?groupid=" + n.id;
+            else
+                ps += "&groupid=" + n.id;
+        	});
+        	$.each(rows, function (i, n) {
+                ps2 += "&groupid=" + n.groupid;
+        	}); 
+		}
+        else{
+        	$.each(rows, function (i, n) {
+            if (i == 0)
+                ps2 += "?groupid=" + n.groupid;
+            else
+                ps2 += "&groupid=" + n.groupid;
+        	});
+        }
+    	
+    	$.post('${pageContext.request.contextPath}/sendmms/getcontacts' + ps + ps2, function (data) {
+            var phones=data.consphone;
+            var nowphones = $("#selectedcons").val();
+           	$("#selectedcons").val(nowphones + phones);
+            $('#addsource').dialog('close');
+        });    	
+    }
+    function addcontacts2(){
+    	var rows = $("#myconlist").datagrid('getSelections');
+    	if(rows.length==0){
+    		$.messager.alert('提示', "请选择联系人", 'info');
+    		return;
+    	}
+    	var phones = "";
+    	$.each(rows, function (i, n) {
+            phones += n.phone+",";
+        });
+        var nowphones = $("#selectedcons").val();
+           	$("#selectedcons").val(nowphones + phones);
+            $('#addsource3').dialog('close');
+    }
+ 	
+ 	function tosend(){
+    	var str="";
+        $("input[name='channel']:checkbox").each(function(){
+            if($(this).attr("checked")){
+                str += $(this).val()+","
+            }
+        })
+        if(str.length>0){
+	        str=str.substr(0, str.length-1);
+	        $("#fm2 input[name='channelIds']").val(str);
+        }
+        else{
+        	$.messager.alert('提示', "请选择通道", 'info');
+        	return;
+        }        
+        $("#fm2 input[name='btype']").val($("#buslist").val());
+        if($("#timing").val()=='1'){
+        	$("#fm2 input[name='timerDatetime']").val($("#dingshiqi").datebox('getValue')); 
+        }
+        else{
+        	$("#fm2 input[name='timerDatetime']").val(''); 
+        }
+        
+    }
+    function changetiming(){
+    	if($("#timing").attr("checked")==true){
+    		$("#timing").val('1');
+    		$("#dingshiqi").datebox({"readonly":false});
+       	}
+    	else{
+    		$("#timing").val('0');
+    		$("#dingshiqi").datebox({"readonly":true});
+    	}
+    }

@@ -1,0 +1,9 @@
+#------------web --------
+web.pagecache.cache_seconds=0
+#-----------jndi--------
+jndiDB=java:comp/env/jdbc/aa
+#------------ jdbc ------------
+jdbc.driverClassName=javax.sql.DataSource
+jdbc.url=jdbc:mysql://localhost:3306/aa?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8"
+jdbc.username=aa
+jdbc.password=aa

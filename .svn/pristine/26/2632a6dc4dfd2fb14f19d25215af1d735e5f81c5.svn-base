@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration name="defaultConfiguration" status="warn" strict="true" monitorInterval="5">
+    <properties>
+        <property name="patternlayout">%d{ISO8601} [%t] %-5level %logger{36} - %msg%n%throwable{full}</property>
+        <Property name="projectHome">${env:TOMCAT_HOME}/webapps/aa</Property>
+        <!-- global -->
+        <property name="filename_global">${sys:projectHome}/logs/globalLog.log</property>
+        <property name="filenamePattern_global">${sys:projectHome}/logs/globalLog-%d{yyyy-dd-MM}-%i.log.gz</property>
+        <!-- projec logic -->
+        <property name="filename_projectLogic">${sys:projectHome}/logs/projectLogicLog.log</property>
+        <property name="filenamePattern_projectLogic">${sys:projectHome}/logs/projectLogicLog-%d{yyyy-dd-MM}-%i.log.gz</property>
+        <!-- thymeleaf -->
+        <property name="filename_thymeleaf">${sys:projectHome}/logs/thymeleafLog.log</property>
+        <property name="filenamePattern_thymeleaf">${sys:projectHome}/logs/thymeleafLog-%d{yyyy-dd-MM}-%i.log.gz</property>
+        <!-- springmvc -->
+        <property name="filename_springmvc">${sys:projectHome}/logs/springmvcLog.log</property>
+        <property name="filenamePattern_springmvc">${sys:projectHome}/logs/springmvcLog-%d{yyyy-dd-MM}-%i.log.gz</property>
+    	<!-- mybatis -->
+        <property name="filename_mybatis">${sys:projectHome}/logs/mybatisLog.log</property>
+        <property name="filenamePattern_mybatis">${sys:projectHome}/logs/mybatisLog-%d{yyyy-dd-MM}-%i.log.gz</property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <layout type="PatternLayout" pattern="${patternlayout}" />
+        </Console>
+        <!-- global -->
+        <appender name="File_global" type="RollingFile" fileName="${filename_global}" filePattern="${filenamePattern_global}" bufferedIO="true" immediateFlush="true"
+        append="true">
+            <layout type="PatternLayout" pattern="${patternlayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </appender>
+        <Async name="AsynchFile_global" blocking="true" bufferSize="128">
+            <appender-ref ref="File_global" />
+        </Async>
+        <!-- project logic -->
+        <appender name="File_projectLogic" type="RollingFile" fileName="${filename_projectLogic}" filePattern="${filenamePattern_projectLogic}" bufferedIO="true" immediateFlush="true"
+        append="true">
+            <layout type="PatternLayout" pattern="${patternlayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </appender>
+        <Async name="AsynchFile_projectLogic" blocking="true" bufferSize="128">
+            <appender-ref ref="File_projectLogic" />
+        </Async>
+        <!-- thymeleaf -->
+        <appender name="File_thymeleaf" type="RollingFile" fileName="${filename_thymeleaf}" filePattern="${filenamePattern_thymeleaf}" bufferedIO="true" immediateFlush="true"
+        append="true">
+            <layout type="PatternLayout" pattern="${patternlayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </appender>
+        <Async name="AsynchFile_thymeleaf" blocking="true" bufferSize="128">
+            <appender-ref ref="File_thymeleaf" />
+        </Async>
+         <!-- springmvc -->
+        <appender name="File_springmvc" type="RollingFile" fileName="${filename_springmvc}" filePattern="${filenamePattern_springmvc}" bufferedIO="true" immediateFlush="true"
+        append="true">
+            <layout type="PatternLayout" pattern="${patternlayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </appender>
+        <Async name="AsynchFile_springmvc" blocking="true" bufferSize="128">
+            <appender-ref ref="File_springmvc" />
+        </Async>
+        <!-- mybatis -->
+        <appender name="File_mybatis" type="RollingFile" fileName="${filename_mybatis}" filePattern="${filenamePattern_mybatis}" bufferedIO="true" immediateFlush="true"
+        append="true">
+            <layout type="PatternLayout" pattern="${patternlayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </appender>
+        <Async name="AsynchFile_mybatis" blocking="true" bufferSize="128">
+            <appender-ref ref="File_mybatis" />
+        </Async>
+    </appenders>
+    <loggers>
+    	<!-- global -->
+        <root level="info">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_global" />
+        </root>
+        <!-- project logic -->
+        <logger name="com.myknowledges.xerp" level="debug" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_projectLogic" />
+        </logger>
+        <!-- thymeleaf -->         
+        <logger name="org.thymeleaf" level="warn" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+        </logger>
+        <!-- 
+        <logger name="org.thymeleaf.TemplateEngine.CONFIG" level="trace" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+         </logger>
+         <logger name="org.thymeleaf.TemplateEngine.TIMER" level="trace" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+         </logger>
+         <logger name="org.thymeleaf.TemplateEngine.cache.TEMPLATE_CACHE" level="trace" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+         </logger>
+         <logger name="org.thymeleaf.TemplateEngine.cache.FRAGMENT_CACHE" level="trace" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+         </logger>
+         <logger name="org.thymeleaf.TemplateEngine.cache.MESSAGE_CACHE" level="trace" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+         </logger>
+         <logger name="org.thymeleaf.TemplateEngine.cache.EXPRESSION_CACHE" level="trace" additivity="false">
+            <appender-ref ref="Console" />
+            <appender-ref ref="AsynchFile_thymeleaf" />
+         </logger>
+         -->
+         <!-- spring mvc -->
+         <logger name="org.springframework.web.context.support.StandardServletEnvironment" level="info" additivity="false">
+          	<appender-ref ref="Console" />
+          	<appender-ref ref="AsynchFile_springmvc" />
+        </logger>
+         <!-- mybatis -->
+         <logger name="org.mybatis" level="info" additivity="false">
+          	<appender-ref ref="Console" />
+          	<appender-ref ref="AsynchFile_mybatis" />
+        </logger>
+    </loggers>
+</configuration>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="records">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="records" id="recordsMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="ID" property="id"  />
+	    <result column="TIME" property="time" />
+	    <result column="COURSE_STATES" property="courseStates" />
+	    <result column="COURSE_DURATION" property="courseDuration" />
+	    <result column="COURSE_LEARNING" property="courseLearning" />
+	    <result column="SECTION_STATES" property="sectionStates" />
+	    <result column="SECTION_DURATION" property="sectionDuration" />
+	    <result column="SECTION_LEARNING" property="sectionLearning" />
+	    <result column="HOMEWORK" property="homework" />
+	    <result column="HOMEWORK_COMPLETION" property="homeworkCompletion" />
+	    <result column="CREATE_DATE" property="createDate" />
+	    <result column="MODIFY_DATE" property="modifyDate" />
+	    <result column="IS_DELETED" property="isDeleted" />
+	    <result column="DELETE_DATE" property="deleteDate" />
+	    <result column="LAST_OPERATOR" property="lastOperator" />
+	</resultMap> 
+	
+	<select id="findById" resultMap="recordsMap">
+		select * from eds_records where ID=#{id}
+	</select>
+</mapper>

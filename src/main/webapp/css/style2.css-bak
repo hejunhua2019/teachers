@@ -1,0 +1,94 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*EMAS亿美版内页模板**********************/
+
+/**********************header**********************/
+.header{ background:url(../images/image_01.jpg) repeat-x;min-width:1228px; height:80px;}
+.h_left{ padding-top:28px; font-family:"微软雅黑"; color:#FFFFFF; font-size:18px; padding-left:40px; width:460px; float:left;}
+.h_left img{  width:134px; float:left; margin-right:57px;}
+.h_right{ width:280px; float:right; padding-top:38px;}
+.h_right{ font-family:"微软雅黑" ; color:#FFFFFF; font-size:12px;}
+.h_right p{ float:left; }
+.h_right a{color:#fff;}
+.h_icon{ background:url(../images/image_02.jpg) no-repeat center left; padding-left:18px; margin-right:52px; }
+/*mian**********************/
+.mian{margin:0 auto; min-width:1228px; overflow:hidden; background:url(../images/mian_bg.gif) repeat-y #D2E0F2; padding-bottom:20px;}
+.m_left{ width:180px; float:left;}
+.nav_tiele h2{height:38px; font-size:14px;  font-family:"微软雅黑"; text-align:center;border-bottom:#0d66c9 1px solid;border-top:1px solid #347ac7; }
+.m_fixed{ background:#2071ca; color:#fff; height:38px; line-height:38px; display:block; position:relative;}
+.m_fixed i{background: url("../images/icon-nav.png") no-repeat ; display: block;  height: 8px; overflow: hidden; position: absolute;  right: 7px; top: 16px; transition: background-position 0.5s ease-in 0s; width: 8px;}
+.m_fixed-on i{background-position:0 -8px;}
+.m_left .m_underline{ border:none;}
+.nav_tiele ul {background:#fff; display:none;}
+.nav_tiele ul li { height:35px; line-height:35px; font-family:"宋体"; border-bottom:1px solid #adadae; text-align:center; }
+.nav_tiele ul li:last-child{border:none 0;}
+.nav_tiele ul li a{color:#666; display:block;font-family:"微软雅黑" ;}
+.nav_tiele ul li a:hover{ color:#666; background:#e3ebf3;}
+.nav_tiele ul .current_url a{color:#666; background:#e3ebf3;}
+.m_right{margin:0 20px 0 200px; min-width:1008px; min-height:600px; overflow:hidden;}
+.new-footer {
+	min-width:1228px;
+    background:#2071ca;
+    height: 50px;
+    color:#fff;
+    line-height: 50px;
+    text-align: center;
+}
+.welcome{margin:0 auto; text-align:center; background:#fff;}
+.welcomed img{width:100%; max-width:1200px;}
+.red{color:#ff0000;}
+.input-file{display:none;}
+
+/*EMAS亿美版内页模板-手机**********************/
+.nav_tiele .nav_fixed { background-color:#fff; color:#004EA3;}
+.right_phone{ padding-left:20px; padding-top:10px; height:600px;}
+.pm_left{ width:14px; float:left;}
+.pm_maddle{ width:212px; float:left;}
+.pm_left{ width:14px; float:left;}
+
+/*EMAS亿美版内页注册**********************/
+.registered_head{ background:url(../images/registered_01.jpg) repeat-x; height:45px;}
+.rh_left{ font-family:"微软雅黑"; font-size:18px; color:#FFFFFF; line-height:45px; width:100px; float:left; margin-left:200px;}
+.rh_right{ width:29px; float:right; padding-top:14px; margin-right:30px;}
+.registered_mian{ background-color:#E3EAF2; padding-top:52px; padding-bottom:100px;}
+.registered_writing{  width:500px; font-size:12px; padding-left:241px;  }
+.dotted_line{ border-bottom:1px dashed #AAB1B9; font-family:Arial, Helvetica, sans-serif; margin-bottom:26px; font-weight:bold; margin-top:6px; }
+.registered_writing span{ float:left; width:289px; margin-bottom:21px;}
+.registered_writing .writing_text{ width:90px; text-align:right; height:30px; line-height:30px; padding-right:20px; color:#363636;}
+.registered_writing .verification_code{ width:82px; margin-left:19px; padding-top:5px;}
+.text_named{ width:274px; }
+.registered_drop_down{width:289px; }
+/*保存、取消区域********************/
+.registered_determine{ padding-left:110px; padding-top:23px;}
+.registered_save,.registered_cancel{ width:91px; margin:0 10px;}
+
+
+/*EMAS亿美版内页登录页**********************/
+.login_header{ padding-top:10px; padding-bottom:10px; overflow:hidden;}
+.login_left{ width:164px; float:left; padding-left:62px;}
+.login_right{ width:153px; float:right;  background:url(../images/login_phone.png) no-repeat left center; padding-left:20px; font-family:Arial, Helvetica, sans-serif; font-size:20px; padding-right:78px; margin-top:5px; color:#196cc4;}
+.login_mian{ background:url(../images/login_background.jpg) repeat-x; min-width:1208px; height:630px; overflow:hidden; text-align:center;}
+.login_mian form{ margin:66px auto 0; overflow:hidden; display:inline-block;}
+
+/*lm_left**********************/
+.lm_left{ width:715px; float:left;}
+
+/*lm_right**********************/
+.lm_right{ width:321px; float:left; text-align:left; background:url(../images/login_08.jpg) no-repeat; height:374px; padding-top:100px; padding-left:36px;}
+.lm_right p{ padding-top:20px; font-size:12px;}
+.lm_right .login_name{ background:url(../images/login_05.jpg) no-repeat; width:245px; height:46px; border:none; line-height:46px; padding-left:40px; color:#404040;}
+.lm_right .login_password{ background:url(../images/login_04.jpg) no-repeat; width:245px; height:46px; border:none; line-height:46px; padding-left:40px; color:#404040;}
+.lm_right .login_verification{ background:url(../images/login_07.jpg) no-repeat; width:122px; height:46px; border:none; line-height:46px; padding-left:20px; color:#404040; float:left;}
+.verification_right{ width:125px; height:46px; margin-left:10px;}
+.login_registered{ color:#FFFFFF; width:160px; margin:0 auto; padding-bottom:24px; padding-top:20px;}
+.login_registered a{ color:#FFFFFF; margin-left:20px;}
+.login_registered a:hover{ text-decoration:underline;}
+.login_registered label{ padding-right:2px; cursor:pointer;}
+.login_registered label input{margin-right:3px;vertical-align:middle;}
+.login_button{ height:46px; width:285px; font-size:20px; font-family:"微软雅黑"; text-align:center; line-height:46px;}
+.login_button a{ color:#FFFFFF; display:block; background:url(../images/login_06.jpg) no-repeat; }
+.login_button a:hover{ background:url(../images/login_03.jpg) no-repeat;}
+.login_footer{ background:#333333; color:#f6f6f6; height:50px; font-size:12px; line-height:50px;text-align:center;}
+
+

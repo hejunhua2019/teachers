@@ -1,0 +1,151 @@
+﻿@charset "utf-8";
+/*全局样式**********************/
+*{ margin:0px; padding:0px;}
+li{ list-style-type:none;}
+img{ border:none;}
+a:link,a:visited{ text-decoration:none;}
+a:hover,a:active{ text-decoration:none;}
+.clear{ clear:both;}
+
+body{margin:0 auto;background:#D2E0F2; font-size:12px; font-family:Tahoma,Verdana,'微软雅黑,新宋体'}
+
+/**宽度**/
+.w50{width:50px;}
+.w120{width:120px;}
+.w130{width:142px;}
+/**填充距离**/
+.ptb5{padding:5px 0;}
+/**文字**/
+.tl{text-align:left;}
+.tc{text-align:center;}
+.tr{text-align:right;}
+
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,'宋体';line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
+
+.txt01{font:Verdana, Geneva, sans-serif,'宋体';padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,'宋体';line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+
+.head a{color:White;text-decoration:underline;}
+
+.easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
+.easyui-accordion ul li{ padding:0px;}
+.easyui-accordion ul li a{line-height:24px;}
+.easyui-accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
+.easyui-accordion ul li div.hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion ul li div.hover a{color:#416AA3;}
+.easyui-accordion ul li div.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
+
+
+
+.icon{ background:url(../images/tabicons.png) no-repeat;width:18px; line-height:18px; display:inline-block;}
+.icon-sys{ background-position:0px -200px;}
+.icon-set{ background-position:-380px -200px;}
+.icon-add{background-position: -20px 0px;}
+.icon-nav{background-position: -100px -20px; }
+.icon-users{background-position: -100px -480px;}
+.icon-role{background-position: -360px -200px;}
+.icon-set{background-position: -380px -200px;}
+.icon-log{background-position: -380px -80px;}
+.icon-delete{ background-position:-140px -120px;}
+.icon-edit{ background-position:-380px -320px;}
+.icon-magic{ background-position:0px -500px;}
+.icon-database{ background-position:-20px -140px;}
+
+/****---------------------------------------------------
+                  表单元素 begin
+---------------------------------------------------****/
+/*表单元素定义*/
+input{
+	overflow:visible;
+	line-height:normal;
+}
+input,select{
+	_height: 18px;
+    _line-height:18px;
+    _padding:4px 6px;
+    _vertical-align: middle;
+	_color:#333;
+}
+input,select,textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 2px;
+    color: #666;
+    display: inline-block;
+    vertical-align: middle;
+	border:1px solid #D0D0D0;
+	height:28px;	
+	padding-left:5px;
+	padding-right:5px;
+	line-height:30px\9;
+	font-size:12px;	
+	background-color: #FFFFFF;
+	*background-color:#fff;
+}
+select{
+	border:1px solid #D0D0D0;
+	height:30px;	
+	padding-left:3px;
+	padding-right:0;
+	background-color: #FAFAFA;
+}
+select[multiple], select[size] {
+    height: auto;
+}
+textarea {
+    height: auto;
+    line-height:180%;
+    padding:5px;
+}
+input:focus,textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+    outline: 0 none;
+}
+input[type="text"]:focus{
+	border-color: rgba(153, 153, 153, 0.8);
+}
+input[type="radio"], input[type="checkbox"] {
+    line-height: normal;
+}
+select:focus, input[type="file"]:focus, input[type="radio"]:focus, input[type="checkbox"]:focus {
+    outline: 0 none;
+    outline-offset: -2px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width:16px;
+  height:16px;
+  margin:0 0 0 3px;
+  vertical-align: middle;
+  border:none 0;
+  padding:0;
+}
+
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus,
+input[type="submit"]:focus {
+  outline: 0 none;
+}
+input[type="submit"],
+input[type="button"]{
+	cursor:pointer;
+	color:#666;
+	background-color:#fff;
+	border:#d0d0d0 1px solid;
+}
+input[type="submit"]:hover,
+input[type="button"]:hover{
+	border-color:#999;
+	background-color:#fff;
+}
+select:focus,select:hover{
+	background-color: #FFFFFF;
+}
+label input[type="radio"],
+label input[type="checkbox"]{
+	margin-right:5px;	
+}
+/****---------------------------------------------------
+                  表单元素 emd
+---------------------------------------------------****/

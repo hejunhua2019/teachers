@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="course">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="course" id="courseMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="ID" property="id"  />
+	    <result column="COURSE_NAME" property="courseName" />
+	    <result column="CLASS_HOURS" property="classHours" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="COURSE_INTRODUCTION" property="courseIntroduction" />
+	    <result column="COURSE_CONTENT" property="courseContent" />
+	    <result column="COURSE_REVIEW" property="courseReview" />
+	    <result column="LOCK_STATUS" property="lockStatus" />
+	    <result column="COURSE_CATEGORY" property="courseCategory" />
+	    <result column="COURSE_CLASS" property="courseClass" />
+	    <result column="COURSE_PICTURE" property="coursePicture" />
+	    <result column="COURSE_VIDEO" property="courseVideo" />
+	    <result column="STUDY_NUMBERS" property="studyNumbers" />
+	    <result column="PRICE" property="price" />
+	    <result column="GROUP_PRICE" property="groupPrice" />
+	    <result column="INSTRUCTOR" property="instructor" />
+	    <result column="VIDEO_CLASSIFICATION" property="videoClassification" />
+	    <result column="COURSE_CATALOG" property="courseCatalog" />
+	    <result column="RECORDING_STARTTIME" property="recordingStarttime" />
+	    <result column="RECORDING_ENDTIME" property="recordingEndtime" />
+	    <result column="BROADCASTING_STARTTIME" property="broadcastingStarttime" />
+	    <result column="BROADCASTING_ENDTIME" property="broadcastingEndtime" />
+	    <result column="LEARNING_TIME" property="learningTime" />
+	    <result column="TEACHERS_ID" property="teachersId" />
+	    <result column="STUDENTS_ID" property="studentsId" />
+	</resultMap> 
+	
+	<!-- find --> 
+    <select id="findById" resultMap="courseMap">
+		select * from eds_courses where ID=#{id}
+	</select>
+	<!-- query -->
+	<select id="find" parameterType="course" resultMap="courseMap">
+		select * from eds_courses 
+		<where>
+			IS_DELETED = '0'
+			<if test="studentsId != null">
+				and STUDENTS_ID=#{studentsId}
+			</if>
+		</where>
+		order by  CREATE_DATE asc limit #{start},#{size}
+	</select>
+	<select id="finds" parameterType="course" resultMap="courseMap">
+		select * from eds_courses 
+		<where>
+			IS_DELETED = '0'
+			<if test="videoClassification != null">
+				and VIDEO_CLASSIFICATION=#{videoClassification}
+			</if>
+		</where>
+		order by  CREATE_DATE asc limit #{start},#{size}
+	</select>
+	<select id="listPage" parameterType="course" resultMap="courseMap">
+		select a.*,b.* from eds_courses as a left join eds_teachers as b on b.id=a.teachers_id
+       <where>
+			a.IS_DELETED = '0'
+			<if test="courseName != null">
+				and a.COURSE_NAME=#{courseName}
+			</if>
+		</where>
+		limit #{start},#{size}
+	</select>
+	<!-- delete -->
+	<delete id="delete">
+		delete from eds_courses where STUDENTS_ID = #{studentsId}
+	</delete>
+	<!-- update -->
+	<update id="update" parameterType="course">
+		update eds_courses
+		<set>
+			MODIFY_DATE = sysdate(),
+			LAST_OPERATOR = #{lastOperator},
+			<if test="courseName != null">
+				COURSE_NAME=#{courseName},
+			</if>
+		</set>
+		where ID = #{id}
+	</update>
+</mapper>

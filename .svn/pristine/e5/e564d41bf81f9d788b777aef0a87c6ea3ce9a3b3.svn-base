@@ -1,0 +1,43 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import cn.com.yajiaotong.wface.entity.GroupSysResource;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class GroupSysResourceServiceTest extends SpringTestCase{
+	
+	@Autowired
+    private GroupSysResourceService  groupSysResourceService;
+    
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			Long groupID = 9999l;
+			Long groupID1 = 99996l;
+			Long sysResourceID=57473l;
+			GroupSysResource  gsr=new GroupSysResource();	
+			gsr.setGroupID(groupID);
+			gsr.setSysResourceID(sysResourceID);
+			groupSysResourceService.add(gsr);
+			gsr=groupSysResourceService.findById(gsr.getId());
+			assertEquals(groupID,gsr.getGroupID());
+			assertEquals(sysResourceID,gsr.getSysResourceID());
+			gsr.setGroupID(groupID1);
+			groupSysResourceService.update(gsr);
+			gsr = groupSysResourceService.findById(gsr.getId());
+			assertEquals(groupID1,gsr.getGroupID());
+			groupSysResourceService.delete(gsr.getId());
+			assertNull(groupSysResourceService.findById(gsr.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+
+	
+}

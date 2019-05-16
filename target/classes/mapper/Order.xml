@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="order">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="order" id="orderMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	     <id column="ID" property="id"  />
+	    <result column="MONEY" property="money" />
+	    <result column="PAY_AMOUNT" property="payAmount" />
+	    <result column="STATUS" property="status" />
+	    <result column="MODE" property="mode" />
+	    <association property="course" javaType="cn.com.yajiaotong.wface.entity.Course">
+	    <id column="ID" property="id"  />   
+		<result column="COURSE_NAME" property="courseName" />
+	    <result column="CLASS_HOURS" property="classHours" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="COURSE_INTRODUCTION" property="courseIntroduction" />
+	    <result column="COURSE_CONTENT" property="courseContent" />
+	    <result column="COURSE_REVIEW" property="courseReview" />
+	    <result column="LOCK_STATUS" property="lockStatus" />
+	    <result column="COURSE_CATEGORY" property="courseCategory" />
+	    <result column="COURSE_CLASS" property="courseClass" />
+	    <result column="COURSE_PICTURE" property="coursePicture" />
+	    <result column="COURSE_VIDEO" property="courseVideo" />
+	    <result column="VIDEO_CLASSIFICATION" property="videoClassification" />
+	    <result column="STUDY_NUMBERS" property="studyNumbers" />
+	    <result column="PRICE" property="price" />
+	    <result column="GROUP_PRICE" property="groupPrice" />
+	    <result column="INSTRUCTOR" property="instructor" />
+	    <result column="STUDENTS_ID" property="studentsId" />
+		</association>
+		<association property="students" javaType="cn.com.yajiaotong.wface.entity.Students">
+		<id column="ID" property="id"  />	   
+	    <result column="MOBILE" property="mobile" />
+	    <result column="PWD" property="pwd" />
+	    <result column="EMAIL" property="email" />
+	    <result column="NICK_NAME" property="nickName" />
+	    <result column="REAL_NAME" property="realName" />
+	    <result column="TO_PAY" property="toPay" />
+	    <result column="LEARNING" property="learning" />
+	    <result column="CLASSES" property="classes" />
+	    <result column="SEX" property="sex" />
+	    <result column="EDUCATION" property="education" />
+	    <result column="WECHAT" property="wechat" />
+	    <result column="LOGIN_COUNTS" property="loginCounts" />
+	    <result column="LAST_LOGIN_DATE" property="lastLoginDate" />
+	    <result column="LOCK_STATUS" property="lockStatus" />
+	    <result column="RESET_PWD" property="resetPwd" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="REMARK" property="remark" />
+	    <result column="COURSE_ID" property="courseId" />
+	    </association>
+	</resultMap> 
+	
+	<select id="findById" resultMap="orderMap">
+		select * from eds_order where ID=#{id}
+	</select>
+	<select id="find" resultMap="orderMap">
+  select a.*,b.*,c.id FROM eds_order as a left join eds_courses as b on b.id=a.courses_id left join eds_students as c on c.id=a.students_id
+       <where>
+			a.IS_DELETED = '0'
+			<!-- <if test="mobile != null">
+				and s.MOBILE=#{mobile}
+			</if> -->
+			<if test="studentsId != null">
+				and a.STUDENTS_ID=#{studentsId}
+			</if><if test="id != null">
+				and a.ID=#{id}
+			</if>
+			<if test="status != null">
+				and a.STATUS=#{status}
+			</if>
+		</where>
+		limit #{start},#{size}
+   </select>
+</mapper>

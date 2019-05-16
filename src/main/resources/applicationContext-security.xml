@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	default-lazy-init="true">
+
+	<!-- check user login status by filter 
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.jsp" />
+		<property name="successUrl" value="user/findById?id=17" />
+		<property name="unauthorizedUrl" value="/401.jsp" />
+		
+		<property name="filterChainDefinitions">
+			<value>				 
+				/sendSMS/httpjson/**=anon
+				/ = anon
+				/404.html = anon
+                /files/** = anon
+                /css/** = anon
+                /images/** = anon
+                /js/** = anon     
+	      
+	      		/login.jsp=anon
+	      		/login/loginAjax=anon
+	      		/captcha/create=anon
+	      		/401.jsp=anon
+	      		/regist/*=anon
+	      		/service/*=anon
+		        
+		        /**=authc,riAccess
+			</value>
+			
+		</property>
+		<property name="filters">
+			<map>
+				<entry key="riAccess"><bean class="cn.com.yajiaotong.wface.web.security.InvalidAccessAuthorizationFilter"/></entry>
+			</map>
+		</property>
+	</bean>
+	-->
+	<!-- security manager 
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="authenticationRealm" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	-->
+	
+	<!-- dao for shiro 
+	<bean id="authenticationRealm" class="cn.com.yajiaotong.wface.web.security.WebCaptchaUserAuthorizingRealm">
+	</bean>
+	-->
+	
+	<!-- cache for shiro 
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="ehCacheManager" />
+	</bean>
+	-->
+	
+	<!-- make Shiro's lifecyclebean working 
+	<bean id="shiroLifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	-->
+
+</beans>

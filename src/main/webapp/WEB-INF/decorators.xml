@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators defaultdir="/main">
+    <!-- 配置哪些请求url不需要经过sitemesh装饰 -->
+    <excludes>
+        <pattern>/login.jsp</pattern>
+        <pattern>/401.jsp</pattern>
+        <pattern>/files/*</pattern>
+        <pattern>/*Ajax</pattern>
+        <pattern>/*ajax</pattern>
+        <pattern>/*Ajax?*</pattern>
+        <pattern>/*ajax?*</pattern>
+        <pattern>/*_news.html</pattern>
+        <pattern>/stat*</pattern>
+        <pattern>/*create*</pattern>
+        <pattern>/*update*</pattern>
+        <pattern>/*delete*</pattern>
+        <pattern>/*captcha/create*</pattern>
+        <pattern>/*listPage*</pattern>
+        <pattern>/*login/logout*</pattern>
+        <pattern>/*download*</pattern>
+        <pattern>/*TabPage*</pattern>
+        <pattern>/*regist/*</pattern>
+        <pattern>/*add*</pattern>
+        <pattern>/*reload*</pattern>
+        <pattern>/*getpages*</pattern>
+        <pattern>/*save*</pattern>
+        <pattern>/*upload*</pattern>
+        <pattern>/*import*</pattern>
+        <pattern>/*send-*</pattern>
+    </excludes>
+
+    <decorator name="main" page="main_new.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>

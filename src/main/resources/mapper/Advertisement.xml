@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="advertisement">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="advertisement" id="advertisementMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="ID" property="id"  />
+	    <result column="NAME" property="name" />
+	    <result column="POSITION" property="position" />
+	    <result column="PICTURE" property="picture" />
+	    <result column="ADDRESS" property="address" />
+	    <result column="SORT" property="sort" />
+	    <result column="CLICKS" property="clicks" />
+	    <result column="CREATE_DATE" property="createDate" />
+	    <result column="MODIFY_DATE" property="modifyDate" />
+	    <result column="DELETE_DATE" property="deleteDate" />
+	    <result column="LAST_OPERATOR" property="lastOperator" />
+	    <result column="IS_DELETED" property="isDeleted" />
+	</resultMap> 
+    
+    <!-- query -->
+	<select id="findById" resultMap="advertisementMap">
+		select * from eds_advertisement where ID=#{id}
+	</select>
+	<!-- add -->
+	<insert id="add" parameterType="cn.com.yajiaotong.wface.entity.Advertisement" useGeneratedKeys="true" keyProperty="id">
+       insert into eds_advertisement(
+             ID,NAME,POSITION,PICTURE,ADDRESS,SORT,CLICKS,CREATE_DATE,MODIFY_DATE,DELETE_DATE,LAST_OPERATOR,IS_DELETED)
+        VALUES(#{id},#{name},#{position},#{picture,jdbcType=BLOB},#{address},#{sort},#{clicks},sysdate(),sysdate(),sysdate(),#{lastOperator},'0')
+    </insert>
+    <!-- delete -->
+	<delete id="delete">
+		delete from eds_advertisement where ID = #{id}
+	</delete>
+</mapper>

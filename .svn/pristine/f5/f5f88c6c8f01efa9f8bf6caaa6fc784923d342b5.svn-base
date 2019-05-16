@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<statics>
+	<types>
+		<type value="1" name="部门"/>
+		<type value="2" name="逻辑"/>
+	</types>
+</statics>

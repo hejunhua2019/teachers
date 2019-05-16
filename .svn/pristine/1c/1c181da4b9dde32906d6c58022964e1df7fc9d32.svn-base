@@ -1,0 +1,50 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Department;
+import cn.com.yajiaotong.wface.entity.User;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class UserServiceTest extends SpringTestCase{
+	
+	@Autowired
+    private UserService userService;
+	
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String account = "asdfsdn32432sfgsf";
+			String account1="sdfsfsdfsd";
+			String password="sdfsfsd";
+			String token="sdfsfsdytktyr";
+			int type=1;
+			User user = new User();	
+			user.setAccount(account);
+			user.setPassword(password);
+			user.setToken(token);
+			user.setType(type);
+			userService.add(user);
+			user = userService.findById(user.getId());
+			assertEquals(account,user.getAccount());
+			assertEquals(password,user.getPassword());
+			assertEquals(token,user.getToken());
+			assertEquals(type,user.getType());
+			user.setAccount(account1);
+			userService.update(user);
+			user = userService.findById(user.getId());
+			assertEquals(account1,user.getAccount());
+			userService.delete(user.getId());
+			assertNull(userService.findById(user.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+
+}

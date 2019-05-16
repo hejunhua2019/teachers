@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+        <!-- 命名空间   设置某个实体对象的别名   mybatis配置文件-->
+    <typeAliases>	
+    	 <!-- 原型 -->	
+    	<!--  <typeAlias alias="prototype" type="cn.com.yajiaotong.wface.entity.Prototype"/> -->
+    	 <!-- 系统管理与用户问题域 -->    	 
+         <typeAlias alias="user" type="cn.com.yajiaotong.wface.entity.User"/> 
+        <!-- <typeAlias alias="info" type="cn.com.yajiaotong.wface.entity.Info"/>   --> 
+    	 <!-- 课程管理 -->
+         <typeAlias alias="course" type="cn.com.yajiaotong.wface.entity.Course"/> 
+    	  <!-- 课程章节管理 -->
+    	 <typeAlias alias="courses" type="cn.com.yajiaotong.wface.entity.Courses"/> 
+    	 <!-- 学员管理 -->
+    	 <typeAlias alias="students" type="cn.com.yajiaotong.wface.entity.Students"/>
+    	 <!-- 教师管理 -->
+    	 <typeAlias alias="teachers" type="cn.com.yajiaotong.wface.entity.Teachers"/>
+    	  <!-- <typeAlias alias="teachs" type="cn.com.yajiaotong.wface.entity.Teachs"/> -->
+    	<!--  <typeAlias alias="studentsInformation" type="cn.com.yajiaotong.wface.entity.StudentsInformation"/>  --> 
+    	 <!-- 学员课程关系管理 -->
+    	 <typeAlias alias="relation" type="cn.com.yajiaotong.wface.entity.Relation"/> 
+    	 <!-- 题库管理 -->
+    	 <typeAlias alias="question" type="cn.com.yajiaotong.wface.entity.Question"/>
+    	 <!-- 试卷管理 -->
+    	 <typeAlias alias="examination" type="cn.com.yajiaotong.wface.entity.Examination"/>
+    	 <!-- 学习记录管理 -->
+    	 <typeAlias alias="records" type="cn.com.yajiaotong.wface.entity.Records"/>
+    	 <!-- 订单管理 -->
+    	 <typeAlias alias="order" type="cn.com.yajiaotong.wface.entity.Order"/>
+    	  <!-- 项目管理 -->
+    	 <!-- 系统管理:广告管理 -->
+    	 <typeAlias alias="advertisement" type="cn.com.yajiaotong.wface.entity.Advertisement"/>
+    	 <!--系统管理: 客服信息维护管理 -->
+    	 <typeAlias alias="services" type="cn.com.yajiaotong.wface.entity.Services"/>
+    	 
+    	 <!-- <typeAlias alias="citizen" type="cn.com.yajiaotong.wface.entity.Citizen"/> -->
+    </typeAliases>
+    <!-- author:yigh; mybatis 分页配置 属性:pageSqlId的值可以任意写,要与BaseDao的方法getAllByPage根据正则匹配上,可以把ByPage改成List等等-->
+	<!-- <plugins>
+		<plugin interceptor="cn.com.yajiaotong.wface.common.page.PagePlugin">
+			<property name="dialect" value="mysql" />
+			<property name="pageSqlId" value=".*[l|L]istPage$" />
+		</plugin>
+	</plugins>    --> 
+</configuration>

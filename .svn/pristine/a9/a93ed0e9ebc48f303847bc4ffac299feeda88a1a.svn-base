@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="citizen">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="citizen" id="citizenMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="pk_NVC_ID" property="id"  />
+	    <result column="NAME" property="name" />
+	    <result column="CREDENTIALSTYPE" property="credentialsType" />
+	    <result column="CREDENTIALSNO" property="credentialsNo" />
+	    <result column="FIXEDPHONE" property="fixedPhone" />
+	    <result column="PHONENUMBER" property="phoneNumber" />
+	    <result column="ADDRESS" property="address" />
+	    <result column="CONTACTADDRESS" property="contactAddress" />
+	    <result column="DRIVINGLICENCE" property="drivinglicence" />
+	    <result column="POLICY" property="policy" />
+	    <result column="CREATEDATE" property="createDate" />
+	    <result column="MODIFYDATE" property="modifyDate" />
+	    <result column="ISDELETED" property="isDeleted" />
+	    <result column="DELETEDATE" property="deleteDate" />
+	    <result column="LASTOPERATOR" property="lastOperator" />
+	</resultMap> 
+
+	<!-- add -->
+	<insert id="add" parameterType="citizen" useGeneratedKeys="true" keyProperty="id">
+		insert into nonstandard_vehicle_t_citizen(
+			NAME,CREDENTIALSTYPE,CREDENTIALSNO,FIXEDPHONE,PHONENUMBER,ADDRESS,CONTACTADDRESS,DRIVINGLICENCE,POLICY,ISDELETED,CREATEDATE,MODIFYDATE,LASTOPERATOR) 
+		values(
+			#{name},#{credentialsType},#{credentialsNo},#{fixedPhone},#{phoneNumber},#{address},#{contactAddress},#{drivinglicence},#{policy},'0',sysdate(),sysdate(),#{lastOperator}
+		)
+	</insert>
+	<!-- batch add -->
+	<insert id="addBatch">
+  	  	insert into nonstandard_vehicle_t_citizen (NAME,CREDENTIALSTYPE,CREDENTIALSNO,FIXEDPHONE,PHONENUMBER,ADDRESS,CONTACTADDRESS,DRIVINGLICENCE,POLICY,ISDELETED,CREATEDATE,LASTOPERATOR) values
+	    <foreach collection="list" item="item" index="index" separator=",">
+		      (
+		      #{item.name},#{item.credentialsType},#{item.credentialsNo},#{item.fixedPhone},#{item.phoneNumber},#{item.address},#{item.contactAddress},#{item.drivinglicence},#{item.policy},'0',sysdate(),#{item.lastOperator}
+		      )
+		</foreach>
+	</insert>
+	<!-- delete -->
+	<delete id="delete">
+		delete from nonstandard_vehicle_t_citizen where pk_NVC_ID = #{id}
+	</delete>
+	<update id="deleteUpdate" parameterType="citizen">
+		update nonstandard_vehicle_t_citizen set ISDELETED='1',DELETEDATE=sysdate(),LASTOPERATOR=#{lastOperator} where pk_NVC_ID = #{id}
+	</update>
+	<delete id="deleteAll">
+		delete from nonstandard_vehicle_t_citizen where pk_NVC_ID in
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</delete>	
+	<update id="deleteUpdateAll">
+		update nonstandard_vehicle_t_citizen set ISDELETED='1',DELETEDATE=sysdate(),LASTOPERATOR=#{uid} where pk_NVC_ID in
+		<foreach collection="ids" item="item" separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</update>
+	<!-- update -->
+	<update id="update" parameterType="citizen">
+		update nonstandard_vehicle_t_citizen
+		<set>
+			MODIFYDATE = sysdate(),
+			LASTOPERATOR = #{lastOperator},
+			<if test="name != null">
+				NAME=#{name},
+			</if>
+			<if test="credentialsType != null">
+				CREDENTIALSTYPE=#{credentialsType},
+			</if>
+			<if test="credentialsNo != null">
+				CREDENTIALSNO=#{credentialsNo},
+			</if>
+			<if test="fixedPhone != null">
+				FIXEDPHONE=#{fixedPhone},
+			</if>
+			<if test="phoneNumber != null">
+				PHONENUMBER=#{phoneNumber},
+			</if>
+			<if test="address != null">
+				ADDRESS=#{address},
+			</if>
+			<if test="contactAddress != null">
+				CONTACTADDRESS=#{contactAddress},
+			</if>
+			<if test="drivinglicence != null">
+				DRIVINGLICENCE=#{drivinglicence},
+			</if>
+			<if test="policy != null">
+				POLICY=#{policy},
+			</if>
+		</set>
+		where pk_NVC_ID = #{id}
+	</update>
+	
+	<!-- query -->
+	<select id="find" parameterType="citizen" resultMap="citizenMap">
+		select * from nonstandard_vehicle_t_citizen 
+		<where>
+			ISDELETED = '0'
+			<if test="id != null">
+				and pk_NVC_ID=#{id}
+			</if>
+			<if test="name != null">
+				and NAME=#{name}
+			</if>
+			<if test="credentialsType != null">
+				and CREDENTIALSTYPE=#{credentialsType},
+			</if>
+			<if test="credentialsNo != null">
+				and CREDENTIALSNO=#{credentialsNo},
+			</if>
+			<if test="fixedPhone != null">
+				and FIXEDPHONE=#{fixedPhone},
+			</if>
+			<if test="phoneNumber != null">
+				and PHONENUMBER=#{phoneNumber},
+			</if>
+			<if test="address != null">
+				and ADDRESS=#{address},
+			</if>
+			<if test="contactAddress != null">
+				and CONTACTADDRESS=#{contactAddress},
+			</if>
+			<if test="drivinglicence != null">
+				and DRIVINGLICENCE=#{drivinglicence},
+			</if>
+			<if test="policy != null">
+				and POLICY=#{policy},
+			</if>
+			
+		</where>
+		order by pk_NVC_ID asc limit #{start},#{size}
+	</select>
+	<select id="findIds" parameterType="citizen" resultType="long">
+		select pk_NVC_ID from nonstandard_vehicle_t_citizen 
+		<where>
+			ISDELETED = '0'
+			<if test="id != null">
+				and pk_NVP_ID=#{id}
+			</if>
+			<if test="name != null">
+				and NAME=#{name}
+			</if>
+			<if test="credentialsType != null">
+				and CREDENTIALSTYPE=#{credentialsType},
+			</if>
+			<if test="credentialsNo != null">
+				and CREDENTIALSNO=#{credentialsNo},
+			</if>
+			<if test="fixedPhone != null">
+				and FIXEDPHONE=#{fixedPhone},
+			</if>
+			<if test="phoneNumber != null">
+				and PHONENUMBER=#{phoneNumber},
+			</if>
+			<if test="address != null">
+				and ADDRESS=#{address},
+			</if>
+			<if test="contactAddress != null">
+				and CONTACTADDRESS=#{contactAddress},
+			</if>
+			<if test="drivinglicence != null">
+				and DRIVINGLICENCE=#{drivinglicence},
+			</if>
+			<if test="policy != null">
+				and POLICY=#{policy},
+			</if>
+		</where>
+		order by pk_NVC_ID asc limit #{start},#{size}
+	</select>
+	<select id="batchFindByIds" resultMap="citizenMap">
+		select * from nonstandard_vehicle_t_citizen where pk_NVC_ID in
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	<select id="findById" resultMap="citizenMap">
+		select * from nonstandard_vehicle_t_citizen where pk_NVC_ID=#{id}
+	</select>
+	<select id="listPage" parameterType="citizen" resultMap="citizenMap">
+		select * from nonstandard_vehicle_t_citizen 
+		<where>
+			ISDELETED = '0'
+			<if test="name != null and name != ''">
+				and NAME like #{name}
+			</if>
+			<if test="credentialsType != null and credentialsType != ''">
+				and CREDENTIALSTYPE like #{credentialsType},
+			</if>
+			<if test="credentialsNo != null and credentialsNo != ''"> 
+				and CREDENTIALSNO like #{credentialsNo},
+			</if>
+			<if test="fixedPhone != null and fixedPhone != ''">
+				and FIXEDPHONE like #{fixedPhone},
+			</if>
+			<if test="phoneNumber != null and phoneNumber != ''">
+				and PHONENUMBER like #{phoneNumber},
+			</if>
+			<if test="address != null and address != ''">
+				and ADDRESS like #{address},
+			</if>
+			<if test="contactAddress != null and contactAddress != ''">
+				and CONTACTADDRESS like #{contactAddress},
+			</if>
+			<if test="drivinglicence != null and drivinglicence != ''">
+				and DRIVINGLICENCE like #{drivinglicence},
+			</if>
+			<if test="policy != null and policy != ''">
+				and POLICY like #{policy},
+			</if>
+		</where>
+		order by pk_NVC_ID desc
+	</select>
+</mapper>

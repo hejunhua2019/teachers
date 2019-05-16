@@ -1,0 +1,48 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import java.util.Date;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.LoginHistory;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class LoginHistoryServiceTest extends SpringTestCase{
+	
+	@Autowired
+    private LoginHistoryService loginHistoryService;
+	
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String ip="3333";
+			String ip1="sdfsfsdfsd";
+			Date date=new Date();
+			Long userID = 9999l;
+			LoginHistory lh=new LoginHistory();			
+			lh.setIp(ip);
+			lh.setDate(date);
+			lh.setUserID(userID);
+			loginHistoryService.add(lh);
+			lh=loginHistoryService.findById(lh.getId());
+			assertEquals(ip,lh.getIp());
+			assertEquals(userID,lh.getUserID());
+			lh.setIp(ip1);
+			loginHistoryService.update(lh);
+			lh=loginHistoryService.findById(lh.getId());
+			assertEquals(ip1,lh.getIp());
+			loginHistoryService.delete(lh.getId());
+			assertNull(loginHistoryService.findById(lh.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+	
+
+}

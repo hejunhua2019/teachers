@@ -1,0 +1,45 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Department;
+import cn.com.yajiaotong.wface.entity.UserGroup;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class UserGroupServiceTest extends SpringTestCase{
+	
+	@Autowired
+    private UserGroupService userGroupService;
+	
+
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			Long userID = 9999l;
+			Long userID1=8888l;
+			Long groupID = 6666l;
+			UserGroup ug = new UserGroup();			
+			ug.setUserID(userID);
+			ug.setGroupID(groupID);
+			userGroupService.add(ug);
+			ug = userGroupService.findById(ug.getId());
+			assertEquals(userID,ug.getUserID());
+			assertEquals(groupID,ug.getGroupID());
+			ug.setUserID(userID1);
+			userGroupService.update(ug);
+			ug = userGroupService.findById(ug.getId());
+			assertEquals(userID1,ug.getUserID());
+			userGroupService.delete(ug.getId());
+			assertNull(userGroupService.findById(ug.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+
+}

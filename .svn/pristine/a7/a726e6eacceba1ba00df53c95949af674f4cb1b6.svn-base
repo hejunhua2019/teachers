@@ -1,0 +1,36 @@
+package cn.com.yajiaotong.wface.entity;
+
+public class Group extends WBaseEntity{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1138359926883629173L;
+
+    private String name;
+    private Integer type;
+    private Long pGID;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Long getpGID() {
+		return pGID;
+	}
+
+	public void setpGID(Long pGID) {
+		this.pGID = pGID;
+	}
+}

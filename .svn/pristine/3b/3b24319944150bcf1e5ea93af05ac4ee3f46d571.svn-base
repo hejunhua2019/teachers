@@ -1,0 +1,66 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Citizen;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class CitizenServiceTest extends SpringTestCase {
+	
+	@Autowired
+    private CitizenService  citizenService;
+	
+	@Test
+	public void testBasicDBCRUD() {
+		//assert(false);
+		try{
+			String name = "asdfsdn32432sfgsf";
+			String name1="sdfsfsdfsd";
+			int credentialsType = 2;
+			String credentialsNo="jjjsfsdf";
+			String fixedPhone="kgktkg";
+			String phoneNumber="ghkfgjfgd";
+			String address="efefsgsb";
+			String contactAddress="jtgfhdgsdg";
+			boolean drivinglicence=false;
+			boolean policy=false;
+			Citizen citi = new Citizen();			
+			citi.setName(name);
+			citi.setCredentialsType(credentialsType);
+			citi.setCredentialsNo(credentialsNo);
+			citi.setFixedPhone(fixedPhone);
+			citi.setPhoneNumber(phoneNumber);
+			citi.setAddress(address);
+			citi.setContactAddress(contactAddress);
+			citi.setDrivinglicence(drivinglicence);
+			citi.setPolicy(policy);
+			citizenService.add(citi);
+			citi = citizenService.findById(citi.getId());
+			assertEquals(name,citi.getName());
+			assertEquals(credentialsType,citi.getCredentialsType());
+			assertEquals(credentialsNo,citi.getCredentialsNo());
+			assertEquals(fixedPhone,citi.getFixedPhone());
+			assertEquals(phoneNumber,citi.getPhoneNumber());
+			assertEquals(address,citi.getAddress());
+			assertEquals(contactAddress,citi.getContactAddress());			
+			citi.setName(name1);
+			citizenService.update(citi);
+			citi = citizenService.findById(citi.getId());
+			assertEquals(name1,citi.getName());
+			citizenService.delete(citi.getId());
+			assertNull(citizenService.findById(citi.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+	
+	
+	
+
+}

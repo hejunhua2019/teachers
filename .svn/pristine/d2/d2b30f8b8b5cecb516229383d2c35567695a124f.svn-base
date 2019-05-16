@@ -1,0 +1,49 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.TrafficPolice;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class TrafficPoliceServiceTest extends SpringTestCase{
+	
+	@Autowired
+    private TrafficPoliceService trafficPoliceService;
+	
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String name = "asdfsdn32432sfgsf";
+			String name1 = "asdfsdn3243";
+			String policeID="sdfsfsdfsd";
+			Long userID = 9999l;
+			Long departmentID = 8888l;
+			TrafficPolice tp = new TrafficPolice();			
+			tp.setName(name);
+			tp.setPoliceID(policeID);
+			tp.setUserID(userID);
+			tp.setDepartmentID(departmentID);
+			trafficPoliceService.add(tp);
+			tp = trafficPoliceService.findById(tp.getId());
+			assertEquals(name,tp.getName());
+			assertEquals(policeID,tp.getPoliceID());
+			assertEquals(userID,tp.getUserID());
+			assertEquals(departmentID,tp.getDepartmentID());
+			tp.setName(name1);
+			trafficPoliceService.update(tp);
+			tp = trafficPoliceService.findById(tp.getId());
+			assertEquals(name1,tp.getName());
+			trafficPoliceService.delete(tp.getId());
+			assertNull(trafficPoliceService.findById(tp.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+
+}

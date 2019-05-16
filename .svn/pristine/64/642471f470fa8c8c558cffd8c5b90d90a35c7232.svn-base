@@ -1,0 +1,42 @@
+package cn.com.yajiaotong.wface.service;
+
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Department;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class DepartmentServiceTest extends SpringTestCase {
+	
+	@Autowired
+    private DepartmentService departmentService;
+	
+
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String addr = "asdfsdn32432sfgsf";
+			String addr1="sdfsfsdfsd";
+			Long groupID = 9999l;
+			Department dep = new Department();			
+			dep.setAddr(addr);
+			dep.setGroupID(groupID);
+			departmentService.add(dep);
+			dep = departmentService.findById(dep.getId());
+			assertEquals(addr,dep.getAddr());
+			assertEquals(groupID,dep.getGroupID());
+			dep.setAddr(addr1);
+			departmentService.update(dep);
+			dep = departmentService.findById(dep.getId());
+			assertEquals(addr1,dep.getAddr());
+			departmentService.delete(dep.getId());
+			assertNull(departmentService.findById(dep.getId()));
+		}catch(Exception e){
+			assert(false);
+		}
+		assert(true);
+	}
+}

@@ -1,0 +1,43 @@
+package cn.com.yajiaotong.wface.service;
+
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Group;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class GroupServiceTest extends SpringTestCase {
+	
+	@Autowired
+    private GroupService groupService;
+	
+
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String name = "asdfsdn32432sfgsf";
+			String name1 = "asdfsdn32432sfgsfsfsfd";
+			Integer type=1;
+			Long pGID = 33l;
+			Group gro = new Group();			
+			gro.setName(name);
+			gro.setType(type);
+			gro.setpGID(pGID);
+			groupService.add(gro);
+			gro = groupService.findById(gro.getId());
+			assert(name.equals(gro.getName())&&type==gro.getType()&&pGID.equals(gro.getpGID()));
+			gro.setName(name1);
+			groupService.update(gro);
+			gro = groupService.findById(gro.getId());
+			assert(name1.equals(gro.getName()));
+			groupService.delete(gro.getId());
+			assertNull(groupService.findById(gro.getId()));
+		}catch(Exception e){
+			assert(false);
+		}
+		assert(true);
+	}
+}

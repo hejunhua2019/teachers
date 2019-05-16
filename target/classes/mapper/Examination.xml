@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="examination">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="examination" id="examinationMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="ID" property="id"  />
+	    <result column="NAME" property="name" />
+	    <result column="NUMBER" property="number" />
+	    <result column="SCORES" property="scores" />
+	    <result column="SCORE" property="score" />
+	    <result column="PASSING_SCORE" property="passingScore" />
+	    <result column="CREATEDATE" property="createDate" />
+	    <result column="MODIFYDATE" property="modifyDate" />
+	    <result column="ISDELETED" property="isDeleted" />
+	    <result column="DELETEDATE" property="deleteDate" />
+	    <result column="LASTOPERATOR" property="lastOperator" />
+	</resultMap> 
+	
+	<select id="findById" resultMap="examinationMap">
+		select * from eds_examination where ID=#{id}
+	</select>
+</mapper>

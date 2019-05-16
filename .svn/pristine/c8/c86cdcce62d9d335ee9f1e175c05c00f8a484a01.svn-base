@@ -1,0 +1,24 @@
+<Context reloadable="true" crossContext="true">
+	<WatchedResource>WEB-INF/web.xml</WatchedResource>
+	<Resource 
+		name="jdbc/aa" 
+		auth="Container" 
+		type="javax.sql.DataSource"		
+		maxActive="100"
+		maxIdle="30"
+		maxWait="5000"
+		initialSize="5"
+		username="aa"
+		password="aa"
+		poolPreparedStatements="false"
+		maxOpenPreparedStatements="10"
+		removeAbandonedTimeout="300"
+		logAbandoned="true"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/aa?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=GMT%2B8"		     
+		validationQuery="select 1 FROM nonstandard_vehicle_t_prototype"
+		testOnBorrow="false" testWhileIdle="true"
+		testOnReturn="false"/>
+		
+		
+</Context>

@@ -1,0 +1,42 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import cn.com.yajiaotong.wface.entity.SysResource;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class SysResourceServiceTest extends SpringTestCase {
+	
+	@Autowired
+    private SysResourceService sysResourceService;
+	
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String name = "asdfsdn32432sfgsf";
+			String name1="sdfsfsdfsd";
+			String code = "eifwenib";
+			SysResource sr = new SysResource();			
+			sr.setName(name);
+			sr.setCode(code);
+			sysResourceService.add(sr);
+			sr = sysResourceService.findById(sr.getId());
+			assertEquals(name,sr.getName());
+			assertEquals(code,sr.getCode());
+			sr.setName(name1);
+			sysResourceService.update(sr);
+			sr=sysResourceService.findById(sr.getId());
+			assertEquals(name1,sr.getName());			
+			sysResourceService.delete(sr.getId());
+			assertNull(sysResourceService.findById(sr.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+
+}

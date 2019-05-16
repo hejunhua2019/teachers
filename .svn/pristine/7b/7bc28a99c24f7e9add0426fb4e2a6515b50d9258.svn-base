@@ -1,0 +1,178 @@
+package cn.com.yajiaotong.wface.service;
+
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Group;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class GroupServiceTest extends SpringTestCase {
+	
+	@Autowired
+    private GroupService groupService;
+	
+
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			String name = "asdfsdn32432sfgsf";
+			String name1 = "asdfsdn32432sfgsfsfsfd";
+			Integer type=1;
+			Long pGID = 33l;
+			Group gro = new Group();			
+			gro.setName(name);
+			gro.setType(type);
+			gro.setpGID(pGID);
+			groupService.add(gro);
+			gro = groupService.findById(gro.getId());
+			assert(name.equals(gro.getName())&&type==gro.getType()&&pGID.equals(gro.getpGID()));
+			gro.setName(name1);
+			groupService.update(gro);
+			gro = groupService.findById(gro.getId());
+			assert(name1.equals(gro.getName()));
+			groupService.delete(gro.getId());
+			assertNull(groupService.findById(gro.getId()));
+		}catch(Exception e){
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+	
+	@Test
+	public void testGetSubGroupsAndGetSubGroupsCascadeAndDeleteSubGroup() {
+		try {
+			int count = 10;
+			Group g = new Group();
+			g.setName("g");
+			g.setpGID(-1l);
+			g.setType(0);
+			groupService.add(g);
+			for(int i=0;i<count;i++) {
+				Group tg = new Group();
+				tg.setpGID(g.getId());
+				tg.setName("tg"+i);
+				tg.setType(0);
+				groupService.add(tg);
+				for(int j=0;j<count;j++) {
+					Group tgg = new Group();
+					tgg.setpGID(tg.getId());
+					tgg.setName("tgg"+i);
+					tgg.setType(0);
+					groupService.add(tgg);
+				}
+			}
+			//test getSubGroup
+			assert(count==groupService.getSubGroup(g).size());
+			//test prepareSubGroupCascade
+			groupService.prepareSubGroupCascade(g);
+			List<Group> level1SubGroups = g.getSubGroups();
+			assert(count == level1SubGroups.size());
+			for(Group gt:level1SubGroups) {
+				List<Group> level2SubGroups = gt.getSubGroups();
+				assert(count == level2SubGroups.size());
+				for(Group gtt:level2SubGroups) {
+					assert(0==gtt.getSubGroups().size());
+				}
+			}
+			
+			//test deleteSubGroup
+			//->remove the level2Groups
+			for(Group gt:level1SubGroups) {
+				groupService.deleteSubGroup(gt);
+				assert(0==groupService.getSubGroup(gt).size());
+			}		
+			//->remove the level1Groups
+			groupService.deleteSubGroup(g);
+			assert(0==groupService.getSubGroup(g).size());
+			
+			//delete the current group
+			groupService.delete(g.getId());
+			assertNull(groupService.findById(g.getId()));
+		}catch(Exception e) {
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+	
+	@Test
+	public void testDeleteSubGroupCascade() {
+		try {
+			int count = 10;
+			Group g = new Group();
+			g.setName("g");
+			g.setpGID(-1l);
+			g.setType(0);
+			groupService.add(g);
+			for(int i=0;i<count;i++) {
+				Group tg = new Group();
+				tg.setpGID(g.getId());
+				tg.setName("tg"+i);
+				tg.setType(0);
+				groupService.add(tg);
+				for(int j=0;j<count;j++) {
+					Group tgg = new Group();
+					tgg.setpGID(tg.getId());
+					tgg.setName("tgg"+i);
+					tgg.setType(0);
+					groupService.add(tgg);
+				}
+			}
+			//test getSubGroup
+			assert(count==groupService.getSubGroup(g).size());
+			//test prepareSubGroupCascade
+			groupService.prepareSubGroupCascade(g);
+			List<Group> level1SubGroups = g.getSubGroups();
+			assert(count == level1SubGroups.size());
+			for(Group gt:level1SubGroups) {
+				List<Group> level2SubGroups = gt.getSubGroups();
+				assert(count == level2SubGroups.size());
+			}
+			
+			//test deleteSubGroupCascade
+			groupService.deleteSubGroupCascade(g);
+			//->test the level2Groups
+			for(Group gt:level1SubGroups) {
+				assert(0==groupService.getSubGroup(gt).size());
+			}		
+			//->test the level1Groups
+			assert(0==groupService.getSubGroup(g).size());
+			
+			//delete the current group
+			groupService.delete(g.getId());
+			assertNull(groupService.findById(g.getId()));
+		}catch(Exception e) {
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+	
+	@Test
+	public void testStatics() {
+		try {
+			//test getGroupTypeMap
+			List<Map<String,String>> types = groupService.getGroupTypeMap();
+			assert(types.size()>0);
+		}catch(Exception e) {
+			e.printStackTrace();
+			assert(false);
+		}
+		assert(true);
+	}
+	
+//	@Test
+//	public void tmp() {
+//		Group g = new Group();
+//		g.setId(-1l);
+//		groupService.prepareSubGroupCascade(g);
+//		System.out.println(g.getSubGroups().size());
+//	}
+}

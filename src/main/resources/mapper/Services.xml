@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="services">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="services" id="servicesMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="ID" property="id"  />
+	    <result column="NAME" property="name" />
+	    <result column="PHONE" property="phone" />
+	    <result column="NUMBER" property="number" />
+	    <result column="CREATE_DATE" property="createDate" />
+	    <result column="MODIFY_DATE" property="modifyDate" />
+	    <result column="IS_DELETED" property="isDeleted" />
+	    <result column="DELETE_DATE" property="deleteDate" />
+	    <result column="LAST_OPERATOR" property="lastOperator" />
+	</resultMap> 
+
+	<!-- update -->
+	<update id="update" parameterType="services">
+		update eds_customer_service
+		<set>
+			MODIFY_DATE = sysdate(),
+			LAST_OPERATOR = #{lastOperator},
+			<if test="name != null">
+				NAME=#{name},
+			</if>
+			<if test="phone != null">
+				PHONE=#{phone},
+			</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<!-- query -->
+	<select id="findById" resultMap="servicesMap">
+		select * from eds_customer_service where ID=#{id}
+	</select>
+	<select id="find" parameterType="services" resultMap="servicesMap">
+		select * from eds_customer_service 
+		<where>
+			IS_DELETED = '0'
+			<if test="id != null">
+				and ID=#{id}
+			</if>
+			<if test="name != null">
+				and NAME=#{name}
+			</if>
+		</where>
+		 limit #{start},#{size}
+	</select>
+</mapper>

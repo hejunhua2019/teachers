@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+  		xmlns:aop="http://www.springframework.org/schema/aop"
+  		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+		default-init-method="init">
+
+    <!--加入Aspectj配置 --> 
+    <aop:aspectj-autoproxy proxy-target-class="true"/>  
+    <bean id="utf8NioCharset" class="java.nio.charset.Charset"
+          factory-method="forName">
+        <constructor-arg index="0" value="UTF-8"/>
+    </bean>
+
+    <mvc:annotation-driven>
+
+        <mvc:message-converters register-defaults="false">
+
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter" >
+                <constructor-arg index="0" ref="utf8NioCharset"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="writeAcceptCharset" value="true"/>
+            </bean>
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="objectMapper" ref="jackson2ObjectMapper"/>
+            </bean>
+            <!-- xml
+            <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/xml;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            -->
+
+        </mvc:message-converters>
+
+    </mvc:annotation-driven>
+
+	<!-- 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean id="webContentInterceptor"
+                  class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+                <property name="cacheSeconds" value="${web.pagecache.cache_seconds}"/>
+            </bean>
+        </mvc:interceptor>
+        <bean class="cn.com.yajiaotong.wface.web.interceptor.MenuInterceptor"></bean>
+    </mvc:interceptors>
+	 -->
+	 
+    <mvc:default-servlet-handler/>
+
+    <!-- bean name view resolver -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="1"/>
+    </bean>
+
+    <!-- jsp view resolver -->
+    <bean id="jspViewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/jsp/" />
+        <property name="suffix" value=".jsp" />
+        <property name="contentType">
+            <value>text/html;charset=UTF-8</value>
+        </property>
+        <property name="order" value="999"/>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxInMemorySize" value="10240" /> <!-- 最大内存大小 (10240)-->
+		<property name="uploadTempDir" value="/upload/" /> <!-- 上传后的目录名 (WebUtils#TEMP_DIR_CONTEXT_ATTRIBUTE) -->
+		<property name="maxUploadSize" value="-1" /> <!-- 最大文件大小，-1为无限止(-1) -->
+    </bean>
+
+    <bean id="exceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- output exception as json -->
+        <property name="defaultErrorView" value="exception2json"/>
+        <!-- print exception stack in console -->
+        <property name="warnLogCategory" value="ERROR"></property>
+        <!-- http status -->
+        <property name="defaultStatusCode" value="500"></property>
+    </bean>
+
+    <bean id="jackson2ObjectMapper"
+          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="failOnEmptyBeans" value="false"/>
+        <property name="indentOutput" value="true"/>
+        <property name="dateFormat">
+            <bean class="java.text.SimpleDateFormat">
+                <constructor-arg value="yyyy-MM-dd HH:mm:ss"/>
+            </bean>
+        </property>
+    </bean>
+<!--
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+     	封装spring 的 xstreamMarshaller 将java对象转换成xml
+    <bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+        <property name="autodetectAnnotations" value="true"/>
+    </bean>
+	-->
+	<!-- 短信接口专用,容器启动时自动调用MainSendTask的initSendSms方法 -->
+	<!-- 
+	<bean class="cn.emay.message.sms.sendProcess.MainSendTask" init-method="initSendSms"></bean>
+	<bean id="sendCommon" class="cn.emay.message.common.SendCommon">
+	</bean>
+	 -->
+</beans>

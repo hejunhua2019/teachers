@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="students">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="students" id="studentsMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	     <id column="ID" property="id"  />
+	    <result column="MOBILE" property="mobile" />
+	    <result column="PWD" property="pwd" />
+	    <result column="EMAIL" property="email" />
+	    <result column="AVATAR" property="avatar" />
+	    <result column="NICK_NAME" property="nickName" />
+	    <result column="REAL_NAME" property="realName" />
+	    <result column="TO_PAY" property="toPay" />
+	    <result column="LEARNING" property="learning" />
+	    <result column="CLASSES" property="classes" />
+	    <result column="SEX" property="sex" />
+	    <result column="EDUCATION" property="education" />
+	    <result column="WECHAT" property="wechat" />
+	    <result column="LOGIN_COUNTS" property="loginCounts" />
+	    <result column="LOGIN_STATUS" property="loginStatus" />
+	    <result column="APPID" property="appId" />
+	    <result column="SECRET" property="secret" />
+	    <result column="JS_CODE" property="js_code" />
+	    <result column="LAST_LOGIN_DATE" property="lastLoginDate" />
+	    <result column="LOCK_STATUS" property="lockStatus" />
+	    <result column="RESET_PWD" property="resetPwd" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="CONTENT" property="content" />
+	    <result column="COURSE_NUMBERS" property="courseNumbers" />
+	    <result column="COURSE_DURATION" property="courseDuration" />
+	    <result column="COMPLETE_NUMBERS" property="completeNumbers" />
+	    <result column="TASK_NUMBERS" property="taskNumbers" />
+	    <result column="REMARK" property="remark" />
+	    <result column="COURSES_ID" property="coursesId" />
+	    <result column="CREATE_DATE" property="createDate" />
+	    <result column="MODIFY_DATE" property="modifyDate" />
+	    <result column="IS_DELETED" property="isDeleted" />
+	    <result column="DELETE_DATE" property="deleteDate" />
+	    <result column="LAST_OPERATOR" property="lastOperator" />
+	</resultMap> 
+	
+	<!-- add -->
+	<insert id="add" parameterType="students" useGeneratedKeys="true" keyProperty="id">
+		insert into eds_students(
+			ID,MOBILE,PWD,EMAIL,AVATAR,NICK_NAME,REAL_NAME,TO_PAY,LEARNING,CLASSES,SEX,EDUCATION,WECHAT,LOGIN_COUNTS,LOGIN_STATUS,APPID,SECRET,JS_CODE,LAST_LOGIN_DATE,LOCK_STATUS,RESET_PWD,ENABLE_FLAG,CONTENT,COURSE_NUMBERS,COURSE_DURATION,COMPLETE_NUMBERS,TASK_NUMBERS,REMARK,COURSES_ID,CREATE_DATE,MODIFY_DATE,IS_DELETED,DELETE_DATE,LAST_OPERATOR) 
+		values(
+			#{id},#{mobile},#{pwd},#{email},#{avatar},#{nickName},#{realName},#{toPay},#{learning},#{classes},#{sex},#{education},#{wechat},#{loginCounts},#{loginStatus},#{appId},#{secret},#{js_code},#{lastLoginDate},#{lockStatus},#{resetPwd},#{enableFlag},#{content},#{courseNumbers},#{courseDuration},#{completeNumbers},#{taskNumbers},#{remark},#{coursesId},sysdate(),sysdate(),'0',sysdate(),#{lastOperator}
+		)
+	</insert>
+	
+	<!-- find --> 
+    <select id="findById" resultMap="studentsMap">
+		select * from eds_students where ID=#{id}
+	</select>
+	<select id="find" parameterType="students" resultMap="studentsMap">
+		select * from eds_students 
+		<where>
+			IS_DELETED = '0'
+			<if test="nickName != null">
+				and NICK_NAME=#{nickName}
+			</if>
+			<if test="mobile != null">
+				and MOBILE=#{mobile}
+			</if>
+			<if test="appId != null">
+				and APPID=#{appId}
+			</if>
+			<if test="secret != null">
+				and SECRET=#{secret}
+			</if>
+			<if test="js_code != null">
+				and JS_CODE=#{js_code}
+			</if>
+			<if test="id != null">
+				and ID=#{id}
+			</if>
+		</where>
+		order by  CREATE_DATE asc limit #{start},#{size}
+	</select>
+	<select id="listPage" parameterType="students" resultMap="studentsMap">
+		select * from eds_students 
+		<where>
+			IS_DELETED = '0'
+			<if test="content != null and content != ''">
+				and CONTENT like #{content}
+			</if>
+		</where>
+		limit #{start},#{size}
+	</select>
+	<!-- delete -->
+	<delete id="delete">
+		delete from eds_students where ID = #{id}
+	</delete>
+	<!-- update -->
+	<update id="update" parameterType="students">
+		update eds_students
+		<set>
+			MODIFY_DATE = sysdate(),
+			LAST_OPERATOR = #{lastOperator},
+			<if test="nickName != null">
+				NICK_NAME=#{nickName},
+			</if>
+			<if test="realName != null">
+				REAL_NAME=#{realName},
+			</if>
+			<if test="mobile != null">
+				MOBILE=#{mobile},
+			</if>
+			<if test="sex != null">
+				SEX=#{sex},
+			</if>
+			<if test="education != null">
+				EDUCATION=#{education},
+			</if>
+		</set>
+		where ID = #{id}
+	</update>
+</mapper>

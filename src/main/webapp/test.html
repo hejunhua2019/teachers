@@ -1,0 +1,162 @@
+<html>
+	<head>
+		<meta charset="UTF-8"> <!-- for HTML5 -->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>JavaScript Test</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/default.css" >
+		<link rel="stylesheet" type="text/css" href="js/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="js/themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="css/showLoading.css">
+		<link rel="stylesheet" type="text/css" href="css/cupertino/jquery-ui-1.9.2.custom.min.css">
+
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+
+		<!-- <script type="text/javascript" src="js/jquery-1.9.1.js"></script>  -->
+		<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery.easyui.min.js" ></script>		
+		<script type="text/javascript" src="js/easyui-lang-zh_CN.js" ></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/FusionCharts.js"></script> 
+		<script type="text/javascript" src="js/jquery.showLoading.min.js"></script> 
+		<script type="text/javascript" src="js/validateRules.js"></script>
+		<script type="text/javascript" src="js/json2.js"></script>
+		<script type="text/javascript" src="js/knockout-3.4.2.js"></script>
+		<script type="text/javascript" src="js/knockout.mapping.js"></script>
+		<script type="text/javascript">
+			
+			function save(mydialogueId,myFormId){
+				$( myFormId).form( 'validate' );
+				alert($('input[name=\'name\']').val());
+			}
+			$(document).ready(function(){
+				$("#addoreditdlg").dialog('open');
+				$('input[name=\'name\']').combobox({
+					//url:'combobox_data.json',
+					data:[{
+							"id":1,
+							"text":"asdsfa"
+						},{
+							"id":2,
+							"text":"brgeert"
+						},{
+							"id":3,
+							"text":"cwrwerwe",
+							"selected":true
+						},{
+							"id":4,
+							"text":"dreteter"
+						},{
+							"id":5,
+							"text":"ertyrty"
+						}],
+					valueField:'id',
+					textField:'text'
+				});
+			});
+			
+			
+			/*
+			// Here's my data model 
+			var ViewModel = function(first, last) {
+					this.firstName = ko.observable(first);     
+					this.lastName = ko.observable(last);      
+					this.fullName = ko.pureComputed(function() {        
+						// Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.         
+						return this.firstName() + " " + this.lastName();     
+					}, this);
+				};
+
+			
+			var vm = new ViewModel("Planet", "Earth");
+			$(document).ready(function(){				
+				ko.applyBindings(vm); // This makes Knockout get to 	
+				var jsonData = (ko.toJSON(vm));
+				// Load and parse the JSON 
+				var someJSON = jsonData; // Omitted: fetch it from the server however you want
+				var parsed = JSON.parse(someJSON);   
+				// Update view model properties 
+				vm.firstName(parsed.firstName); 
+				vm.lastName(parsed.lastName);
+			});		
+			*/
+			
+			
+
+			
+			
+			var dataJs={firstName:"123",lastName:"456"};	
+			var vm = ko.mapping.fromJS(dataJs);
+			$(document).ready(function(){
+				ko.applyBindings(vm);
+				//when receive ajax datas doc: file:///C:/Documents%20and%20Settings/ThomasYuan/%E6%A1%8C%E9%9D%A2/scriptLab/test.html
+				ko.mapping.fromJS(dataJs,vm);
+				//get the jsonDatas from model
+				var jsonData = (ko.toJSON(vm));
+			});
+		</script>
+	</head>
+	<body>		
+		
+		
+		<div id="addoreditdlg" title="  " class="easyui-dialog" data-options="draggable:true,resizable:true" style="width:500px;height:430px;padding:10px 20px" closed="true" buttons="#addoreditdlg-buttons">
+			<div class="ftitle" id ="addoredittitle"></div>
+			<form id="addoreditfm" method="post" novalidate>
+				<div class="fitem">
+					<label>名称:</label>
+					<input name="name" class="easyui-validatebox" required="true" >
+					
+					<p>First name: <input data-bind="value: firstName" /></p> 
+					<p>Last name: <input data-bind="value: lastName" /></p> 
+					<!--
+					<h2>Hello, <span data-bind="text: fullName"> </span>!</h2>
+					-->
+					
+				</div>					
+				<input type="hidden" name="id"/>
+			</form>
+		</div>
+	
+		
+		<div id="addoreditdlg-buttons">
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="save('#addoreditdlg','#addoreditfm')">保存</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#addoreditdlg').dialog('close')">取消</a>
+		</div>
+		
+		
+		<!--
+		<h2>Basic ValidateBox</h2>
+		<p>It's easy to add validate logic to a input box.</p>
+		<div style="margin:20px 0;"></div>
+		<div class="easyui-panel" title="Register" style="width:100%;max-width:400px;padding:30px 60px;">
+			<div style="margin-bottom:20px">
+				<label for="username" class="label-top">User Name:</label>
+				<input id="username" class="easyui-validatebox tb" data-options="required:true,validType:'length[3,10]'">
+			</div>
+			<div style="margin-bottom:20px">
+				<label for="email" class="label-top">Email:</label>
+				<input id="email" class="easyui-validatebox tb" data-options="required:true,validType:'email'">
+			</div>
+			<div style="margin-bottom:20px">
+				<label for="url" class="label-top">Url:</label>
+				<input id="url" class="easyui-validatebox tb" data-options="required:true,validType:'url'">
+			</div>
+			<div style="margin-bottom:20px">
+				<label for="phone" class="label-top">Phone:</label>
+				<input id="phone" class="easyui-validatebox tb" data-options="required:true">
+			</div>
+		</div>
+		<style scoped="scoped">
+			.tb{
+				width:100%;
+				margin:0;
+				padding:5px 4px;
+				border:1px solid #ccc;
+				box-sizing:border-box;
+			}
+		</style>
+		-->
+	</body>
+</html>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="usersysresource">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="userSysResource" id="userSysResourceMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="pk_NVUSR_ID" property="id"  />
+	    <result column="fk_NVUSR_NVU_ID" property="userID" />
+	    <result column="fk_NVUSR_NVSR_ID" property="sysResourceID" />
+	    <result column="CREATEDATE" property="createDate" />
+	    <result column="MODIFYDATE" property="modifyDate" />
+	    <result column="ISDELETED" property="isDeleted" />
+	    <result column="DELETEDATE" property="deleteDate" />
+	    <result column="LASTOPERATOR" property="lastOperator" />
+	</resultMap> 
+
+	<!-- add -->
+	<insert id="add" parameterType="userSysResource" useGeneratedKeys="true" keyProperty="id">
+		insert into nonstandard_vehicle_t_user_sys_resource(
+			fk_NVUSR_NVU_ID,fk_NVUSR_NVSR_ID,ISDELETED,CREATEDATE,MODIFYDATE,LASTOPERATOR) 
+		values(
+			#{userID},#{sysResourceID},'0',sysdate(),sysdate(),#{lastOperator}
+		)
+	</insert>
+	<!-- batch add -->
+	<insert id="addBatch">
+  	  	insert into nonstandard_vehicle_t_user_sys_resource (fk_NVUSR_NVU_ID,fk_NVUSR_NVSR_ID,ISDELETED,CREATEDATE,LASTOPERATOR) values
+	    <foreach collection="list" item="item" index="index" separator=",">
+		      (
+		      #{item.userID},#{item.sysResourceID},'0',sysdate(),#{item.lastOperator}
+		      )
+		</foreach>
+	</insert>
+	<!-- delete -->
+	<delete id="delete">
+		delete from nonstandard_vehicle_t_user_sys_resource where pk_NVUSR_ID = #{id}
+	</delete>
+	<update id="deleteUpdate" parameterType="userSysResource">
+		update nonstandard_vehicle_t_user_sys_resource set ISDELETED='1',DELETEDATE=sysdate(),LASTOPERATOR=#{lastOperator} where pk_NVUSR_ID = #{id}
+	</update>
+	<delete id="deleteAll">
+		delete from nonstandard_vehicle_t_user_sys_resource where pk_NVUSR_ID in
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</delete>	
+	<update id="deleteUpdateAll">
+		update nonstandard_vehicle_t_user_sys_resource set ISDELETED='1',DELETEDATE=sysdate(),LASTOPERATOR=#{uid} where pk_NVUSR_ID in
+		<foreach collection="ids" item="item" separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</update>
+	<!-- update -->
+	<update id="update" parameterType="userSysResource">
+		update nonstandard_vehicle_t_user_sys_resource
+		<set>
+			MODIFYDATE = sysdate(),
+			LASTOPERATOR = #{lastOperator},
+			<if test="userID != null">
+				fk_NVUSR_NVU_ID=#{userID},
+			</if>
+			<if test="sysResourceID != null">
+				fk_NVUSR_NVSR_ID=#{sysResourceID},
+			</if>
+		</set>
+		where pk_NVUSR_ID = #{id}
+	</update>
+	
+	<!-- query -->
+	<select id="find" parameterType="userSysResource" resultMap="userSysResourceMap">
+		select * from nonstandard_vehicle_t_user_sys_resource 
+		<where>
+			ISDELETED = '0'
+			<if test="id != null">
+				and pk_NVUSR_ID=#{id}
+			</if>
+			<if test="userID != null">
+				and fk_NVUSR_NVU_ID=#{userID}
+			</if>
+			<if test="sysResourceID != null">
+				and fk_NVUSR_NVSR_ID=#{sysResourceID}
+			</if>
+		</where>
+		order by pk_NVUSR_ID asc limit #{start},#{size}
+	</select>
+	<select id="findIds" parameterType="userSysResource" resultType="long">
+		select pk_NVUSR_ID from nonstandard_vehicle_t_user_sys_resource 
+		<where>
+			ISDELETED = '0'
+			<if test="id != null">
+				and pk_NVUSR_ID=#{id}
+			</if>
+			<if test="userID != null">
+				and fk_NVUSR_NVU_ID=#{userID}
+			</if>
+			<if test="sysResourceID != null">
+				and fk_NVUSR_NVSR_ID=#{sysResourceID}
+			</if>
+		</where>
+		order by pk_NVUSR_ID asc limit #{start},#{size}
+	</select>
+	<select id="batchFindByIds" resultMap="userSysResourceMap">
+		select * from nonstandard_vehicle_t_user_sys_resource where pk_NVUSR_ID in
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	<select id="findById" resultMap="userSysResourceMap">
+		select * from nonstandard_vehicle_t_user_sys_resource where pk_NVUSR_ID=#{id}
+	</select>
+	<select id="listPage" parameterType="userSysResource" resultMap="userSysResourceMap">
+		select * from nonstandard_vehicle_t_user_sys_resource 
+		<where>
+			ISDELETED = '0'
+			<if test="userID != null">
+				and fk_NVUSR_NVU_ID=#{userID}
+			</if>
+			<if test="sysResourceID != null">
+				and fk_NVUSR_NVSR_ID=#{sysResourceID}
+			</if>
+		</where>
+		order by pk_NVUSR_ID desc
+	</select>
+</mapper>

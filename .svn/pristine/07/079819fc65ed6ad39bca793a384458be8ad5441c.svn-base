@@ -1,0 +1,43 @@
+package cn.com.yajiaotong.wface.service;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.com.yajiaotong.wface.entity.Department;
+import cn.com.yajiaotong.wface.entity.UserSysResource;
+import cn.com.yajiaotong.wface.test.commons.SpringTestCase;
+
+public class UserSysResourceServiceTest extends SpringTestCase{
+	
+	@Autowired
+    private UserSysResourceService userSysResourceService;
+	
+	@Test
+	public void testBasicDBCRUD() {
+		try{
+			Long userID = 9999l;
+			Long userID1 = 5555l;
+			Long sysResourceID = 8888l;
+			UserSysResource usr = new UserSysResource();			
+			usr.setUserID(userID);
+			usr.setSysResourceID(sysResourceID);
+			userSysResourceService.add(usr);
+			usr = userSysResourceService.findById(usr.getId());
+			assertEquals(userID,usr.getUserID());
+			assertEquals(sysResourceID,usr.getSysResourceID());
+			usr.setUserID(userID1);
+			userSysResourceService.update(usr);
+			usr = userSysResourceService.findById(usr.getId());
+			assertEquals(userID1,usr.getUserID());
+			userSysResourceService.delete(usr.getId());
+			assertNull(userSysResourceService.findById(usr.getId()));
+		}catch(Exception e){
+			assert(false);
+		}
+		assert(true);
+	}
+
+}

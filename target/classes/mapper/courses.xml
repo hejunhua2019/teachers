@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="courses">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="courses" id="coursesMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="ID" property="id"  />
+	    <result column="NUMBER" property="number" />
+	    <result column="SUMMARY" property="summary" />
+	    <result column="CATALOGUE" property="catalogue" />
+	    <result column="CHAPTER_VIDEO" property="chapterVideo" />
+	    <result column="IS_FREE" property="isFree" />
+	    <result column="COURSES_ID" property="coursesId" />
+	    <result column="CREATE_DATE" property="createDate" />
+	    <result column="MODIFY_DATE" property="modifyDate" />
+	    <result column="IS_DELETED" property="isDeleted" />
+	    <result column="DELETE_DATE" property="deleteDate" />
+	    <result column="LAST_OPERATOR" property="lastOperator" />
+	</resultMap> 
+	
+	<!-- query -->
+	<select id="findById" resultMap="coursesMap">
+		select * from eds_courses_section where COURSES_ID=#{id}
+	</select>
+	<select id="find" parameterType="courses" resultMap="coursesMap">
+		select * from eds_courses_section 
+		<where>
+			IS_DELETED = '0'
+			<if test="coursesId != null">
+				and COURSES_ID=#{coursesId}
+			</if>
+		</where>
+		order by  CREATE_DATE asc limit #{start},#{size}
+	</select>
+</mapper>

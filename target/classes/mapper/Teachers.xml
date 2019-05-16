@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="teachers">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="teachers" id="teachersMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     --> 
+	    <id column="ID" property="id"  />   
+	    <result column="MOBILE" property="mobile" />
+	    <result column="NAME" property="name" />
+	    <result column="CLASSES" property="classes" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="SEX" property="sex" />
+	    <result column="INTRODUCTION" property="introduction" />
+	    <result column="HEAD_PICTURE" property="headPicture" />
+	    <result column="REMARK" property="remark" />
+        <result column="COURSES_ID" property="coursesId" />
+	</resultMap>
+	<!-- query -->
+	<select id="findById" resultMap="teachersMap">
+		select * from eds_teachers where ID=#{id}
+	</select>
+	<select id="find" parameterType="teachers" resultMap="teachersMap">
+		select * from eds_teachers 
+		<where>
+			IS_DELETED = '0'
+			<if test="coursesId != null">
+				and COURSES_ID=#{coursesId}
+			</if>
+			<if test="name != null">
+				and NAME=#{name}
+			</if>
+		</where>
+		order by  CREATE_DATE asc limit #{start},#{size}
+	</select>
+	<select id="listPage" parameterType="teachers" resultMap="teachersMap">
+		select a.*,b.* from eds_teachers as a left join eds_courses as b on b.teachers_id=a.id
+       <where>
+			a.IS_DELETED = '0'
+			<if test="id != null">
+				and a.ID=#{id}
+			</if>
+			<if test="name != null">
+				and a.NAME=#{name}
+			</if>
+		</where>
+		limit #{start},#{size}
+	</select>
+	<!-- add -->
+	<insert id="add" parameterType="teachers" useGeneratedKeys="true" keyProperty="id">
+		insert into eds_teachers(
+			ID,MOBILE,NAME,CLASSES,ENABLE_FLAG,SEX,INTRODUCTION,HEAD_PICTURE,REMARK,COURSES_ID,IS_DELETED,CREATE_DATE,MODIFY_DATE,LAST_OPERATOR) 
+		values(
+			#{id},#{mobile},#{name},#{classes},#{enableFlag},#{sex},#{introduction},#{headPicture},#{remark},#{coursesId},'0',sysdate(),sysdate(),#{lastOperator}
+		)
+	</insert>
+</mapper>

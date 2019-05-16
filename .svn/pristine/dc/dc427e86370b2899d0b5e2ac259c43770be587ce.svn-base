@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="group">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="group" id="groupMap">  
+	    <!--   
+	        column:对应的列名  
+	        property:对应的属性名  
+	     -->  
+	    <id column="pk_NVG_ID" property="id"  />
+	    <result column="NAME" property="name" />
+	    <result column="TYPE" property="type" />
+	    <result column="fk_NVG_NVG_ID" property="pGID" />
+	    <result column="CREATEDATE" property="createDate" />
+	    <result column="MODIFYDATE" property="modifyDate" />
+	    <result column="ISDELETED" property="isDeleted" />
+	    <result column="DELETEDATE" property="deleteDate" />
+	    <result column="LASTOPERATOR" property="lastOperator" />
+	</resultMap> 
+
+	<!-- add -->
+	<insert id="add" parameterType="group" useGeneratedKeys="true" keyProperty="id">
+		insert into nonstandard_vehicle_t_group(
+			NAME,TYPE,fk_NVG_NVG_ID,ISDELETED,CREATEDATE,MODIFYDATE,LASTOPERATOR) 
+		values(
+			#{name},#{type},#{pGID},'0',sysdate(),sysdate(),#{lastOperator}
+		)
+	</insert>
+	<!-- batch add -->
+	<insert id="addBatch">
+  	  	insert into nonstandard_vehicle_t_group (NAME,TYPE,fk_NVG_NVG_ID,ISDELETED,CREATEDATE,LASTOPERATOR) values
+	    <foreach collection="list" item="item" index="index" separator=",">
+		      (
+		      #{item.name},#{item.type},#{item.pGID},'0',sysdate(),#{item.lastOperator}
+		      )
+		</foreach>
+	</insert>
+	<!-- delete -->
+	<delete id="delete">
+		delete from nonstandard_vehicle_t_group where pk_NVG_ID = #{id}
+	</delete>
+	<delete id="deleteSubGroups">
+		delete from nonstandard_vehicle_t_group where fk_NVG_NVG_ID = #{id}
+	</delete>
+	<update id="deleteUpdate" parameterType="group">
+		update nonstandard_vehicle_t_group set ISDELETED='1',DELETEDATE=sysdate(),LASTOPERATOR=#{lastOperator} where pk_NVG_ID = #{id}
+	</update>
+	<delete id="deleteAll">
+		delete from nonstandard_vehicle_t_group where pk_NVG_ID in
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</delete>	
+	<update id="deleteUpdateAll">
+		update nonstandard_vehicle_t_group set ISDELETED='1',DELETEDATE=sysdate(),LASTOPERATOR=#{uid} where pk_NVG_ID in
+		<foreach collection="ids" item="item" separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</update>
+	<!-- update -->
+	<update id="update" parameterType="group">
+		update nonstandard_vehicle_t_group
+		<set>
+			MODIFYDATE = sysdate(),
+			LASTOPERATOR = #{lastOperator},
+			<if test="name != null">
+				NAME=#{name},
+			</if>
+			<if test="type != null">
+				TYPE=#{type},
+			</if>
+			<if test="pGID != null">
+				fk_NVG_NVG_ID=#{pGID},
+			</if>
+		</set>
+		where pk_NVG_ID = #{id}
+	</update>
+	
+	<!-- query -->
+	<select id="find" parameterType="group" resultMap="groupMap">
+		select * from nonstandard_vehicle_t_group 
+		<where>
+			ISDELETED = '0'
+			<if test="id != null">
+				and pk_NVG_ID=#{id}
+			</if>
+			<if test="name != null">
+				and NAME=#{name}
+			</if>
+			<if test="type != null">
+				and TYPE=#{type}
+			</if>
+			<if test="pGID != null">
+				and fk_NVG_NVG_ID=#{pGID}
+			</if>
+		</where>
+		order by pk_NVG_ID asc limit #{start},#{size}
+	</select>
+	<select id="findIds" parameterType="group" resultType="long">
+		select pk_NVG_ID from nonstandard_vehicle_t_group 
+		<where>
+			ISDELETED = '0'
+			<if test="id != null">
+				and pk_NVG_ID=#{id}
+			</if>
+			<if test="name != null">
+				and NAME=#{name}
+			</if>
+			<if test="type != null">
+				and TYPE=#{type}
+			</if>
+			<if test="pGID != null">
+				and fk_NVG_NVG_ID=#{pGID}
+			</if>
+		</where>
+		order by pk_NVG_ID asc limit #{start},#{size}
+	</select>
+	<select id="batchFindByIds" resultMap="groupMap">
+		select * from nonstandard_vehicle_t_group where pk_NVG_ID in
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	<select id="findById" resultMap="groupMap">
+		select * from nonstandard_vehicle_t_group where pk_NVG_ID=#{id}
+	</select>
+	<select id="listPage" parameterType="group" resultMap="groupMap">
+		select * from nonstandard_vehicle_t_group 
+		<where>
+			ISDELETED = '0'
+			<if test="name != null and name != ''">
+				and NAME like #{name}
+			</if>
+			<if test="type != null">
+				and TYPE=#{type}
+			</if>
+			<if test="pGID != null">
+				and fk_NVG_NVG_ID=#{pGID}
+			</if>
+		</where>
+		order by pk_NVG_ID desc
+	</select>
+</mapper>

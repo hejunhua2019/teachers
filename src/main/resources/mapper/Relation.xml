@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 数据访问接口映射文件 对应一个dao数据访问接口类 -->
+<mapper namespace="relation">
+	<!--   
+	    返回的数据映射   
+	        type：代表是要映射的对象  
+	        id：代表唯一(过会我们要拿到它)  
+	-->  
+	<resultMap type="cn.com.yajiaotong.wface.entity.Relation" id="relationMap">
+	    <id column="id" property="id"/>
+	    <result column="COURSES_ID" property="coursesId" />
+	    <result column="STUDENTS_ID" property="studentsId" />
+	    <result column="TEACHERS_ID" property="teachersId" />
+	    <result column="SECTION_ID" property="sectionId" />
+	    <result column="RECORDS_ID" property="recordsId" />
+	    <association property="course" javaType="cn.com.yajiaotong.wface.entity.Course">
+	    <id column="id" property="id"/>   
+		<result column="COURSE_NAME" property="courseName" />
+	    <result column="CLASS_HOURS" property="classHours" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="COURSE_INTRODUCTION" property="courseIntroduction" />
+	    <result column="COURSE_CONTENT" property="courseContent" />
+	    <result column="COURSE_REVIEW" property="courseReview" />
+	    <result column="LOCK_STATUS" property="lockStatus" />
+	    <result column="COURSE_CATEGORY" property="courseCategory" />
+	    <result column="COURSE_CLASS" property="courseClass" />
+	    <result column="COURSE_PICTURE" property="coursePicture" />
+	    <result column="COURSE_VIDEO" property="courseVideo" />
+	    <result column="VIDEO_CLASSIFICATION" property="videoClassification" />
+	    <result column="STUDY_NUMBERS" property="studyNumbers" />
+	    <result column="PRICE" property="price" />
+	    <result column="GROUP_PRICE" property="groupPrice" />
+	    <result column="INSTRUCTOR" property="instructor" />
+	    <result column="RECORDING_STARTTIME" property="recordingStarttime" />
+	    <result column="RECORDING_ENDTIME" property="recordingEndtime" />
+	    <result column="BROADCASTING_STARTTIME" property="broadcastingStarttime" />
+	    <result column="BROADCASTING_ENDTIME" property="broadcastingEndtime" />
+	    <result column="LEARNING_TIME" property="learningTime" />
+	    <result column="STUDENTS_ID" property="studentsId" />
+		</association>
+		<association property="students" javaType="cn.com.yajiaotong.wface.entity.Students">
+		<id column="id" property="id"/>	   
+	    <result column="MOBILE" property="mobile" />
+	    <result column="PWD" property="pwd" />
+	    <result column="EMAIL" property="email" />
+	    <result column="NICK_NAME" property="nickName" />
+	    <result column="REAL_NAME" property="realName" />
+	    <result column="TO_PAY" property="toPay" />
+	    <result column="LEARNING" property="learning" />
+	    <result column="CLASSES" property="classes" />
+	    <result column="SEX" property="sex" />
+	    <result column="EDUCATION" property="education" />
+	    <result column="WECHAT" property="wechat" />
+	    <result column="LOGIN_COUNTS" property="loginCounts" />
+	    <result column="LAST_LOGIN_DATE" property="lastLoginDate" />
+	    <result column="LOCK_STATUS" property="lockStatus" />
+	    <result column="RESET_PWD" property="resetPwd" />
+	    <result column="ENABLE_FLAG" property="enableFlag" />
+	    <result column="CONTENT" property="content" />
+	    <result column="COURSE_NUMBERS" property="courseNumbers" />
+	    <result column="TASK_NUMBERS" property="taskNumbers" />
+	    <result column="REMARK" property="remark" />
+	    <result column="COURSE_ID" property="courseId" />
+	    </association>
+	    <association property="teachers" javaType="cn.com.yajiaotong.wface.entity.Teachers">
+	      <result column="MOBILE" property="mobile" />
+	     <result column="NAME" property="name" />
+	     <result column="CLASSES" property="classes" />
+	     <result column="ENABLE_FLAG" property="enableFlag" />
+	     <result column="SEX" property="sex" />
+	     <result column="INTRODUCTION" property="introduction" />
+	     <result column="HEAD_PICTURE" property="headPicture" />
+	     <result column="REMARK" property="remark" />
+	    </association>
+        <association property="records" javaType="cn.com.yajiaotong.wface.entity.Records">
+         <id column="id" property="id"/>
+	     <result column="TIME" property="time" />
+	     <result column="COURSE_STATES" property="courseStates" />
+	     <result column="COURSE_DURATION" property="courseDuration" />
+	     <result column="COURSE_LEARNING" property="courseLearning" />
+	     <result column="SECTION_STATES" property="sectionStates" />
+	     <result column="SECTION_DURATION" property="sectionDuration" />
+	     <result column="SECTION_LEARNING" property="sectionLearning" />
+	     <result column="HOMEWORK" property="homework" />
+	     <result column="HOMEWORK_COMPLETION" property="homeworkCompletion" />
+	    </association>
+	    <association property="courses" javaType="cn.com.yajiaotong.wface.entity.Courses">
+	     <result column="NUMBER" property="number" />
+	     <result column="SUMMARY" property="summary" />
+	     <result column="CATALOGUE" property="catalogue" />
+	     <result column="CHAPTER_VIDEO" property="chapterVideo" />
+	     <result column="IS_FREE" property="isFree" />
+	     <result column="COURSES_ID" property="coursesId" />
+	    </association>
+    </resultMap>
+
+	
+	<select id="findById" resultMap="relationMap">
+		select * from eds_students_courses where id=#{id}
+	</select>
+  <!--  <select id="find" resultMap="relationMap">
+   select sc.*,s.*,C.* from eds_students_courses as sc left join eds_students as s on s.id=sc.students_id left join eds_courses as c on c.id=sc.courses_id
+       <where>
+			sc.IS_DELETED = '0'
+			<if test="mobile != null">
+				and s.MOBILE=#{mobile}
+			</if>
+			<if test="studentsId != null">
+				and sc.STUDENTS_ID=#{studentsId}
+			</if>
+		</where>
+		limit #{start},#{size}
+   </select> -->
+   <select id="find" resultMap="relationMap">
+    select sc.*,s.*,C.*,d.*,e.* from eds_students_courses as sc left join eds_students as s on s.id=sc.students_id left join eds_courses as c on c.id=sc.courses_id LEFT JOIN eds_records as d on d.id=sc.records_id LEFT JOIN eds_courses_section as e on e.id=sc.section_id
+       <where>
+			sc.IS_DELETED = '0'
+			<if test="studentsId != null">
+				and sc.STUDENTS_ID=#{studentsId}
+			</if>
+			<if test="coursesId != null">
+				and sc.COURSES_ID=#{coursesId}
+			</if>
+		</where>
+		limit #{start},#{size}
+   </select>
+    <select id="listPage" resultMap="relationMap">
+   select sc.*,s.*,c.* from eds_students_courses as sc left join eds_teachers as s on s.id=sc.teachers_id left join eds_courses as c on c.id=sc.courses_id
+       <where>
+			sc.IS_DELETED = '0'
+			<!-- <if test="mobile != null">
+				and s.MOBILE=#{mobile}
+			</if> -->
+			<if test="teachersId != null">
+				and sc.TEACHERS_ID=#{teachersId}
+			</if>
+		</where>
+		limit #{start},#{size}
+   </select>
+   <!-- <select id="listPage" parameterType="relation" resultMap="relationMap">
+		select s.*,C.* from eds_students_courses as sc left join eds_students as s on s.id=sc.students_id left join eds_courses as c on c.id=sc.courses_id
+       <where>
+			sc.IS_DELETED = '0'
+			<if test="nickName != null">
+				and s.NICK_NAME like #{nickName}
+			</if>
+			<if test="mobile != null">
+				and s.MOBILE like #{mobile}
+			</if> 
+			<if test="studentsId != null">
+				and sc.STUDENTS_ID=#{studentsId}
+			</if>
+		</where>
+		limit #{start},#{size}
+	</select> -->
+	<!-- delete -->
+	<delete id="delete">
+		delete from eds_students_courses where students_id = #{studentsId}
+	</delete>
+</mapper>
