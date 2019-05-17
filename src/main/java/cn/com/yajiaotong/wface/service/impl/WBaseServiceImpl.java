@@ -59,6 +59,11 @@ private WBaseDao<T> baseDao;
 	public List<T> find(T entity) {
 		return baseDao.find(entity,null);
 	}
+	
+	@Override
+	public List<T> findteacher(T entity) {
+		return baseDao.findTeacher(entity,null);
+	}
 
 	@Override
 	public List<Long> findIds(T entity) {
@@ -73,6 +78,11 @@ private WBaseDao<T> baseDao;
 	@Override
 	public T findById(Long id) {
 		return baseDao.findById(id);
+	}
+	
+	@Override
+	public T findmaxId(Long id ) {
+		return baseDao.findmaxId(id);
 	}
 
 	@Override

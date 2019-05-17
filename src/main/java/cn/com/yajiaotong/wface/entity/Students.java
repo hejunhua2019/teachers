@@ -22,6 +22,7 @@ public class Students extends WBaseEntity{
 	private int loginCounts; //登录次数;
 	private int loginStatus;//登录状态(1：已登录；0：未登录)
 	private String appId;//小程序 appId
+	private String openId;//小程序 openid
 	private String secret;//小程序 Secret
 	private String js_code;//登录时获取的 code
 	private Date lastLoginDate; //最后登录时间;
@@ -119,6 +120,14 @@ public class Students extends WBaseEntity{
 
 	public void setAppId(String appId) {
 		this.appId = appId;
+	}
+	
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public String getSecret() {

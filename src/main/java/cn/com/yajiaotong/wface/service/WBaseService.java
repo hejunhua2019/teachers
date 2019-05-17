@@ -28,6 +28,8 @@ void add(T entity);
 	
 	List<T> find(T entity);
 	
+	List<T> findteacher(T entity);
+	
 	List<Long> findIds(T entity);
 	
 	List<T> batchFindByIds(List<Long> ids);
@@ -35,5 +37,7 @@ void add(T entity);
 	T findById(Long id);
 	 
     List<T> listPage(T entity);  
+    
+	T findmaxId(Long id);  
     
 }

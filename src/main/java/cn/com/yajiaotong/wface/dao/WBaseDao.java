@@ -31,6 +31,8 @@ public interface WBaseDao<T extends WBaseEntity> {
 	
 	List<T> find(T entity,String methodName);
 	
+	List<T> findTeacher(T entity,String methodName);
+	
 	List<Long> findIds(T entity);
 	
 	List<T> batchFindByIds(List<Long> ids);
@@ -38,4 +40,6 @@ public interface WBaseDao<T extends WBaseEntity> {
 	T findById(Long id);
 	 
     List<T> listPage(T entity,String methodName);    
+    
+    T findmaxId(Long id);   
 }
