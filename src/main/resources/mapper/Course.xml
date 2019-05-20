@@ -38,6 +38,9 @@
 	    <result column="BROADCASTING_STARTTIME" property="broadcastingStarttime" />
 	    <result column="BROADCASTING_ENDTIME" property="broadcastingEndtime" />
 	    <result column="LEARNING_TIME" property="learningTime" />
+	    <result column="NUMBERS" property="numbers" />
+	    <result column="SHELF_STATE" property="shelfState" />
+	    <result column="SORT" property="sort" />
 	    <result column="TEACHERS_ID" property="teachersId" />
 	    <result column="STUDENTS_ID" property="studentsId" />
 	</resultMap> 
