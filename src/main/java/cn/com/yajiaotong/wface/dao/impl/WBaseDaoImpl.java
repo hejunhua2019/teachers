@@ -134,6 +134,31 @@ public class WBaseDaoImpl<T extends WBaseEntity> extends SqlSessionDaoSupport im
 		
 		return result;
 	}
+	
+	@Override
+	public List<T> findTeacher(T entity,String methodName) {
+		methodName = (methodName==null)? "findteacher":methodName;
+		List<T> result = new ArrayList<T>();
+		int start = 0;
+		int size = WBaseDao.QUERY_LIMIT;
+		entity.setSize(size);
+		List<T> t = null;
+		int queryCount = 0;
+		do{
+			entity.setStart(start);				
+			t = getSqlSession().selectList(mapperName+"."+methodName,entity);
+			if(t!=null){
+				result.addAll(t);
+				queryCount = t.size();
+				t.clear();
+			}else{
+				queryCount = 0;
+			}
+			start += size;				
+			}while(t!=null && queryCount>0);
+		
+		return result;
+	}
 
 	@Override
 	public List<Long> findIds(T entity) {		
@@ -179,6 +204,11 @@ public class WBaseDaoImpl<T extends WBaseEntity> extends SqlSessionDaoSupport im
 	@Override
 	public T findById(Long id) {
 		return getSqlSession().selectOne(mapperName+".findById",id);
+	}
+	
+	@Override
+	public T findmaxId(Long id) {
+		return getSqlSession().selectOne(mapperName+".findmaxId",id);
 	}
 
 	@Override

@@ -115,6 +115,17 @@
 		</where>
 		limit #{start},#{size}
    </select> -->
+   	<select id="findteacher" resultMap="relationMap">
+	   	  select t. * from eds_teachers as t INNER JOIN  eds_students_courses as sc on t.id=sc.teachers_id 
+	   	  <where>
+		
+		
+			<if test="coursesId != null">
+				 sc.COURSES_ID=#{coursesId}
+			</if>
+		</where>
+		 limit #{start},#{size}
+	</select>
    <select id="find" resultMap="relationMap">
     select sc.*,s.*,C.*,d.*,e.* from eds_students_courses as sc left join eds_students as s on s.id=sc.students_id left join eds_courses as c on c.id=sc.courses_id LEFT JOIN eds_records as d on d.id=sc.records_id LEFT JOIN eds_courses_section as e on e.id=sc.section_id
        <where>

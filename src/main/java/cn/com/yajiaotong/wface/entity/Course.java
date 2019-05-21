@@ -28,6 +28,9 @@ public class Course extends WBaseEntity{
 	private String broadcastingStarttime;//直播开始时间
 	private String broadcastingEndtime;//直播结束时间
 	private String learningTime;//学习时间
+	private int numbers;//成交量/咨询次数
+	private int shelfState;//上架状态(1:表示上架,0:表示下架)
+	private int sort;//排序
 	private String teachersId;//授课老师ID(外键)
 	private String studentsId;//学员ID(外键)
 	private Teachers teachers;
@@ -39,6 +42,77 @@ public class Course extends WBaseEntity{
     private List<Question> questionList;
     
     
+    
+    public Course() {
+		super();
+	}
+    
+	
+	public Course(String courseName, int classHours, char enableFlag, String courseIntroduction, String courseContent,
+			String courseReview, char lockStatus, char courseCategory, char courseClass, String coursePicture,
+			String courseVideo, int studyNumbers, String price, String groupPrice, String instructor,
+			int videoClassification, String courseCatalog, String recordingStarttime, String recordingEndtime,
+			String broadcastingStarttime, String broadcastingEndtime, String learningTime, int numbers, int shelfState,
+			int sort, String teachersId, String studentsId, Teachers teachers, List<Relation> relationList,
+			List<Question> questionList) {
+		super();
+		this.courseName = courseName;
+		this.classHours = classHours;
+		this.enableFlag = enableFlag;
+		this.courseIntroduction = courseIntroduction;
+		this.courseContent = courseContent;
+		this.courseReview = courseReview;
+		this.lockStatus = lockStatus;
+		this.courseCategory = courseCategory;
+		this.courseClass = courseClass;
+		this.coursePicture = coursePicture;
+		this.courseVideo = courseVideo;
+		this.studyNumbers = studyNumbers;
+		this.price = price;
+		this.groupPrice = groupPrice;
+		this.instructor = instructor;
+		this.videoClassification = videoClassification;
+		this.courseCatalog = courseCatalog;
+		this.recordingStarttime = recordingStarttime;
+		this.recordingEndtime = recordingEndtime;
+		this.broadcastingStarttime = broadcastingStarttime;
+		this.broadcastingEndtime = broadcastingEndtime;
+		this.learningTime = learningTime;
+		this.numbers = numbers;
+		this.shelfState = shelfState;
+		this.sort = sort;
+		this.teachersId = teachersId;
+		this.studentsId = studentsId;
+		this.teachers = teachers;
+		this.relationList = relationList;
+		this.questionList = questionList;
+	}
+
+
+	public int getNumbers() {
+		return numbers;
+	}
+
+	public void setNumbers(int numbers) {
+		this.numbers = numbers;
+	}
+
+	public int getShelfState() {
+		return shelfState;
+	}
+
+	public void setShelfState(int shelfState) {
+		this.shelfState = shelfState;
+	}
+
+	public int getSort() {
+		return sort;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
+	}
+
 	public String getRecordingStarttime() {
 		return recordingStarttime;
 	}
@@ -95,39 +169,7 @@ public class Course extends WBaseEntity{
 		this.teachersId = teachersId;
 	}
 
-	public Course() {
-		super();
-	}
-    
-	public Course(String courseName, int classHours, char enableFlag, String courseIntroduction, String courseContent,
-			String courseReview, char lockStatus, char courseCategory, char courseClass, String coursePicture,
-			String courseVideo, int studyNumbers, String price, String groupPrice, String instructor,
-			int videoClassification, String courseCatalog, String teachersId, String studentsId, Teachers teachers,
-			List<Relation> relationList, List<Question> questionList) {
-		super();
-		this.courseName = courseName;
-		this.classHours = classHours;
-		this.enableFlag = enableFlag;
-		this.courseIntroduction = courseIntroduction;
-		this.courseContent = courseContent;
-		this.courseReview = courseReview;
-		this.lockStatus = lockStatus;
-		this.courseCategory = courseCategory;
-		this.courseClass = courseClass;
-		this.coursePicture = coursePicture;
-		this.courseVideo = courseVideo;
-		this.studyNumbers = studyNumbers;
-		this.price = price;
-		this.groupPrice = groupPrice;
-		this.instructor = instructor;
-		this.videoClassification = videoClassification;
-		this.courseCatalog = courseCatalog;
-		this.teachersId = teachersId;
-		this.studentsId = studentsId;
-		this.teachers = teachers;
-		this.relationList = relationList;
-		this.questionList = questionList;
-	}
+	
 
 	public List<Question> getQuestionList() {
 		return questionList;

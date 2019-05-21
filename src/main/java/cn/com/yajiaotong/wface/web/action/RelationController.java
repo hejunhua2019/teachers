@@ -69,6 +69,15 @@ public class RelationController extends WBaseController<Relation>{
 		System.out.println(relations.size());
 		return this.respBodyWriter.toSuccess(relations);
 	}
+	@RequestMapping("findteacher")
+	@ResponseBody
+	public RespBody findteacher(String coursesId){
+		Relation  relation=new Relation();
+		relation.setCoursesId(coursesId);
+		List<Relation> relations=this.relationService.findteacher(relation);
+		System.out.println(relations.size());
+		return this.respBodyWriter.toSuccess(relations);
+	}
 	@RequestMapping("finds")
 	@ResponseBody
 	public RespBody finds(String coursesId){

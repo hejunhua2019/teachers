@@ -99,17 +99,18 @@ public class StudentsController extends WBaseController<Students>{
 			studentes.setJs_code(js_code);
 		}*/
 		List<Students> u1 = studentsService.find(studentes);
+		
 		/*if(null!=u1&&u1.size()>0){
 			jsonMap.put("warning:","duplicate Students！");
     		return jsonMap;
     	}*/
 		///long studentsId=0;
-		studentes.setId(10000L);//设置学员ID
+		//studentes.setId(10000L);//设置学员ID
 		if(null!=u1&&u1.size()<=0) {
 			//long studentsId=10000;//学员ID
 			//studentes.setId(10000L);//设置学员ID
-			this.studentsService.add(studentes);
-			System.out.println("插入成功!");
+			//this.studentsService.add(studentes);
+			//System.out.println("插入成功!");
 		}
 		//产生一个随机数
 		//int x=(int)(Math.random()*10000);//产生一个10000以内的整数
@@ -147,12 +148,25 @@ public class StudentsController extends WBaseController<Students>{
         	 //studentes.setId(studentsId);//学员ID
         	 //this.studentsService.add(studentes);
      		//返回登录状态数据
-        	 student.setJs_code(js_code);
+        	  student.setOpenId(openId);
+        	 //student.setJs_code("");
         	 List<Students> students=this.studentsService.find(student);
-             longStatus=students.get(0).getLockStatus();
-             courseDuration=students.get(0).getCourseDuration();
-             completeNumbers=students.get(0).getCompleteNumbers(); 
-             //
+        	 if(students.size()>0) {
+                 longStatus=students.get(0).getLockStatus();
+                 courseDuration=students.get(0).getCourseDuration();
+                 completeNumbers=students.get(0).getCompleteNumbers(); 
+                 studentes.setId(students.get(0).getId());
+        	 }
+        	 
+        	 Students std=this.studentsService.findmaxId(Long.valueOf(1));
+        	 studentes.setOpenId(openId);
+        	 
+        	 if(null!=students&&students.size()<=0) {
+        		 studentes.setId(std.getId()+1);
+     			this.studentsService.add(studentes);
+     			System.out.println("插入成功!");
+     		}
+
          }
          jsonMap.put("studentsId", studentes.getId());
 		 jsonMap.put("openId",openId);//openId键 存放openId 

@@ -61,6 +61,9 @@
 	</insert>
 	
 	<!-- find --> 
+	 <select id="findmaxId" resultMap="studentsMap">
+		select max(id)as id from eds_students where 1=#{id}
+	</select>
     <select id="findById" resultMap="studentsMap">
 		select * from eds_students where ID=#{id}
 	</select>
@@ -76,6 +79,9 @@
 			</if>
 			<if test="appId != null">
 				and APPID=#{appId}
+			</if>
+			<if test="openId != null">
+				and OPENID=#{openId}
 			</if>
 			<if test="secret != null">
 				and SECRET=#{secret}
